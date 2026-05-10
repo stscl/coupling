@@ -1,5 +1,8 @@
 # coupling
 
+[![coupling website:
+https://stscl.github.io/coupling/](reference/figures/coupling.png)](https://stscl.github.io/coupling/)
+
 ***Coupling** Coordination Analysis*
 
 *coupling* is an R package for coupling coordination analysis based on
