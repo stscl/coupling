@@ -25,9 +25,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// RcppMetaCoupling
+Rcpp::DataFrame RcppMetaCoupling(const Rcpp::NumericMatrix& mat, const Rcpp::NumericMatrix& swm_peri, const Rcpp::NumericMatrix& swm_tele, const Rcpp::NumericVector& weight, const std::string& method, int threads);
+RcppExport SEXP _coupling_RcppMetaCoupling(SEXP matSEXP, SEXP swm_periSEXP, SEXP swm_teleSEXP, SEXP weightSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type swm_peri(swm_periSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type swm_tele(swm_teleSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type weight(weightSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type method(methodSEXP);
+    Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppMetaCoupling(mat, swm_peri, swm_tele, weight, method, threads));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_coupling_RcppCCD", (DL_FUNC) &_coupling_RcppCCD, 4},
+    {"_coupling_RcppMetaCoupling", (DL_FUNC) &_coupling_RcppMetaCoupling, 6},
     {NULL, NULL, 0}
 };
 

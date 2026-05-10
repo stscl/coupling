@@ -178,6 +178,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <RcppThread.h>
+#include "coupling/numericutils.hpp"
 
 namespace coupling
 {
@@ -196,6 +197,7 @@ inline double ccd_c_single(
     const std::string& method = "standard"
 ) {
     size_t p = vec.size(); // number of U values
+    if (p <= 1) return std::numeric_limits<double>::quiet_NaN();
     
     double C_val = 0.0;
 
@@ -233,7 +235,7 @@ inline double ccd_c_single(
 
         double denom = (p - 1) * p / 2.0;
         double term1 = 1.0 - (sum_dist / denom);
-        if (term1 < 0) term1 = 0;
+        // if (term1 < 0) term1 = 0;
 
         double max_u = *std::max_element(vec.begin(), vec.end());
 
