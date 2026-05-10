@@ -8,15 +8,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/stscl/coupling/blob/main/DESCRIPTION)
+[`inst/CITATION`](https://github.com/stscl/coupling/blob/main/inst/CITATION)
 
-Lyu W (2026). *coupling: Coupling Coordination Analysis*. R package
-version 0.0.0.9000, <https://stscl.github.io/coupling/>.
+Lyu W (2026). *coupling: Analysis of Coupling Coordination Degree*.
+[doi:10.32614/CRAN.package.coupling](https://doi.org/10.32614/CRAN.package.coupling).
+R package version 0.1.
 
     @Manual{,
-      title = {coupling: Coupling Coordination Analysis},
+      title = {{coupling: Analysis of Coupling Coordination Degree}},
       author = {Wenbo Lyu},
       year = {2026},
-      note = {R package version 0.0.0.9000},
-      url = {https://stscl.github.io/coupling/},
+      note = {R package version 0.1},
+      doi = {10.32614/CRAN.package.coupling},
     }
