@@ -5,7 +5,7 @@
  * ------------------------------------------------
  *
  * This module implements the Coupling Coordination Degree (CCD) framework,
- * a widely used approach for measuring the interaction, coupling strength,
+ * a widely used method for measuring the interaction, coupling strength,
  * and coordinated development among multiple subsystems or indicators.
  *
  * The CCD model evaluates the internal consistency of a system composed of
@@ -142,20 +142,26 @@
  * Notes
  * ---------------------------------------------------------------------------
  *
- * • All computations are performed independently for each spatial unit.
+ * • Input values MUST be normalized to [0, 1] or be on a comparable scale.
  *
- * • Input values are assumed to be non-negative. For the standard model,
- *   strictly positive values are required due to the geometric mean.
+ * • If all indicators are zero (i.e., no subsystem development),
+ *   the coupling degree (C) is defined as 0.
  *
- * • Numerical safeguards may be required to avoid:
- *      - division by zero
- *      - negative values under square root due to floating-point errors
+ *   This avoids undefined operations (e.g., 0/0) and ensures
+ *   that systems without development are not interpreted as
+ *   having perfect coupling.
  *
- * • The Wang formulation uses pairwise absolute differences as a measure
- *   of dispersion.
+ * • The CCD model is scale-sensitive:
+ *   - Standard model depends on relative magnitudes
+ *   - Wang model depends on pairwise differences and max-normalization
+ *   - Fan model is variance-based
  *
- * • The ccd_c_single function is useful when computing C for a single
- *   observation without constructing a full matrix.
+ * • Without normalization, the coupling degree (C) may not reflect
+ *   coordination but instead reflect scale dominance.
+ *
+ * • Recommended preprocessing:
+ *   - Min-max normalization
+ *   - Z-score normalization (followed by rescaling to [0,1] if needed)
  *
  * ---------------------------------------------------------------------------
  * Author: Wenbo Lyu (Github: @SpatLyu)
@@ -171,6 +177,7 @@
 #include <numeric>
 #include <algorithm>
 #include <stdexcept>
+#include <RcppThread.h>
 
 namespace coupling
 {
@@ -204,6 +211,10 @@ inline double ccd_c_single(
 
         double geo_mean = std::pow(prod_sum, 1.0/p);
         double arith_mean = mean(vec);
+        
+        if (coupling::numericutils::doubleNearlyEqual(arith_mean, 0.0)) {
+            return 0.0;
+        }
 
         C_val = geo_mean / arith_mean;
     }
@@ -226,6 +237,10 @@ inline double ccd_c_single(
 
         double max_u = *std::max_element(vec.begin(), vec.end());
 
+        if (coupling::numericutils::doubleNearlyEqual(max_u, 0.0)) {
+            return 0.0;
+        }
+
         double prod = 1.0;
         for (double u : vec) {
             prod *= (u / max_u);
@@ -240,13 +255,18 @@ inline double ccd_c_single(
     // fan
     // =========================
     else if (method == "fan") {
-
         double sum_u = std::accumulate(vec.begin(), vec.end(), 0.0);
+        // if (coupling::numericutils::doubleNearlyEqual(sum_u, 0.0)) {
+        //     return 0.0;
+        // }
 
         double sum_u2 = 0.0;
         for (double u : vec) {
             sum_u2 += u * u;
         }
+        // if (coupling::numericutils::doubleNearlyEqual(sum_u2, 0.0)) {
+        //     return 0.0;
+        // }
 
         double numerator = p * sum_u2 - sum_u * sum_u;
         double denom = p * p;
@@ -261,92 +281,27 @@ inline double ccd_c_single(
         throw std::invalid_argument("Unknown method");
     }
     
-    return C_val;
+    return std::clamp(C_val, 0.0, 1.0);
 }
 
 inline std::vector<double> ccd_c(
     const std::vector<std::vector<double>>& mat,
-    const std::string& method = "standard"
+    const std::string& method = "standard",
+    size_t threads = 1
 ) {
     size_t n_units = mat.size();
     if (n_units == 0) return {};
 
-    size_t p = mat[0].size(); // number of U values per unit
-
     std::vector<double> result(n_units, 0.0);
-
-    for (size_t i = 0; i < n_units; ++i) {
-        const std::vector<double>& U = mat[i];
-
-        // =========================
-        // standard
-        // =========================
-        if (method == "standard") {
-            double prod_sum = 1.0;
-            for (double u : U) {
-                // if (u <= 0) throw std::runtime_error("Values must be positive.");
-                prod_sum *= u;
-            }
-
-            double geo_mean = std::pow(prod_sum, 1.0/p);
-            double arith_mean = mean(U);
-
-            result[i] = geo_mean / arith_mean;
+    
+    if (threads <= 1) {
+        for (size_t i = 0; i < n_units; ++i) {
+            result[i] = ccd_c_single(mat[i], method);
         }
-
-        // =========================
-        // wang
-        // =========================
-        else if (method == "wang") {
-
-            double sum_dist = 0.0;
-
-            for (size_t j = 0; j < p - 1; ++j) {
-                for (size_t k = j + 1; k < p; ++k) {
-                    sum_dist += std::abs(U[j] - U[k]);
-                }
-            }
-
-            double denom = (p - 1) * p / 2.0;
-            double term1 = 1.0 - (sum_dist / denom);
-            if (term1 < 0) term1 = 0;
-
-            double max_u = *std::max_element(U.begin(), U.end());
-
-            double prod = 1.0;
-            for (double u : U) {
-                prod *= (u / max_u);
-            }
-
-            double term2 = std::pow(prod, 1.0 / (p - 1));
-
-            result[i] = std::sqrt(term1 * term2);
-        }
-
-        // =========================
-        // fan
-        // =========================
-        else if (method == "fan") {
-
-            double sum_u = std::accumulate(U.begin(), U.end(), 0.0);
-
-            double sum_u2 = 0.0;
-            for (double u : U) {
-                sum_u2 += u * u;
-            }
-
-            double numerator = p * sum_u2 - sum_u * sum_u;
-            double denom = p * p;
-
-            double val = numerator / denom;
-            if (val < 0) val = 0;
-
-            result[i] = 1.0 - 2.0 * std::sqrt(val);
-        }
-
-        else {
-            throw std::invalid_argument("Unknown method");
-        }
+    } else {
+        RcppThread::parallelFor(0, n_units, [&](size_t i) {
+            result[i] = ccd_c_single(mat[i], method);
+        }, threads);
     }
 
     return result;
@@ -355,14 +310,15 @@ inline std::vector<double> ccd_c(
 inline std::vector<std::vector<double>> ccd(
     const std::vector<std::vector<double>>& mat,
     const std::vector<double>& weight,
-    const std::string& method = "standard"
+    const std::string& method = "standard",
+    size_t threads = 1
 ) {
     size_t n_units = mat.size(); // number of unit
     size_t p = mat[0].size(); // number of U values per unit
 
     std::vector<std::vector<double>> result(2, std::vector<double>(n_units, 0.0));
     
-    std::vector<double> C_vals = ccd_c(mat, method); // C values
+    std::vector<double> C_vals = ccd_c(mat, method, threads); // C values
     result[0] = C_vals;
 
     for (size_t i = 0; i < n_units; ++i) {

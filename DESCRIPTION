@@ -14,13 +14,10 @@ BugReports: https://github.com/stscl/coupling/issues
 Depends: 
     R (>= 4.1.0)
 LinkingTo: 
-    Rcpp
-Imports: 
-    methods,
-    sdsfun,
-    sf,
-    terra
+    Rcpp,
+    RcppThread
 Suggests: 
-    Rcpp
+    Rcpp,
+    RcppThread,
 Config/roxygen2/markdown: TRUE
 Config/roxygen2/version: 8.0.0
