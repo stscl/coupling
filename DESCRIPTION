@@ -1,6 +1,6 @@
 Package: coupling
-Title: Coupling Coordination Analysis
-Version: 0.0.0.9000
+Title: Analysis of Coupling Coordination Degree
+Version: 0.1
 Authors@R: 
     person(given = "Wenbo", family = "Lyu",
            email = "lyu.geosocial@gmail.com", 
@@ -17,7 +17,10 @@ LinkingTo:
     Rcpp,
     RcppThread
 Suggests: 
+    infoxtr,
+    pc,
     Rcpp,
     RcppThread,
+    spEDM
 Config/roxygen2/markdown: TRUE
 Config/roxygen2/version: 8.0.0
