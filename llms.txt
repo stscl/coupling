@@ -91,3 +91,9 @@ agglomerations. Communications Earth & Environment 7.
 - [`metacoupling()`](https://stscl.github.io/coupling/reference/metacoupling.md)
   : Metacoupling Analysis
 
+# Articles
+
+### All vignettes
+
+- [Coupling Coordination Degree Model and Metacoupling
+  Analysis](https://stscl.github.io/coupling/articles/ccd.md):

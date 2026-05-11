@@ -1,6 +1,9 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://stscl.github.io/coupling/404.html</loc></url>
+<url><loc>https://stscl.github.io/coupling/articles/ccd.html</loc></url>
+<url><loc>https://stscl.github.io/coupling/articles/index.html</loc></url>
 <url><loc>https://stscl.github.io/coupling/authors.html</loc></url>
+<url><loc>https://stscl.github.io/coupling/build-vignettes.html</loc></url>
 <url><loc>https://stscl.github.io/coupling/index.html</loc></url>
 <url><loc>https://stscl.github.io/coupling/news/index.html</loc></url>
 <url><loc>https://stscl.github.io/coupling/reference/ccd.html</loc></url>
