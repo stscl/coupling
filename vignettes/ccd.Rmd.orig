@@ -1,0 +1,209 @@
+---
+title: "Coupling Coordination Degree Model and Metacoupling Analysis"
+author: "Wenbo Lyu"
+date: |
+  | Last update: 2026-05-12
+  | Last run: `r Sys.Date()`
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ccd}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  message = FALSE,
+  comment = "##",
+  fig.path = "man/figures/ccd/"
+)
+```
+
+# Introduction
+
+The **Coupling Coordination Degree (CCD) model** is widely used to quantify the degree of coupling and coordinated development among multiple subsystems. Originating from physics, it has been extensively applied in regional and human–environment systems.
+
+## Coupling Degree
+
+Given *n* normalized subsystem indicators $U_i$, the standard coupling degree $C$ is defined as:
+
+$$
+C = \left[ \frac{\prod_{i=1}^{n} U_i}{\left( \frac{1}{n} \sum_{i=1}^{n} U_i \right)^n} \right]^{\frac{1}{n}}
+$$
+
+Although widely used, this formulation may suffer from **scale sensitivity and over-amplification effects** due to the power structure. To address these issues, several formulations have been proposed by modifying the functional form of the coupling degree.
+
+## Modified Coupling Degree
+
+### Modification by $\text{wang et al}^{[1]}$.
+
+**First**, Wang et al. introduce a formulation that incorporates pairwise differences among subsystems while normalizing their relative magnitudes:
+
+$$
+C = \sqrt{\left[1-\frac{\sum\limits_{i>j,j=1}^{n-1} \sqrt{\left(U_i-U_j\right)^2}}{\sum_{m=1}^{n-1}m}\right] \times \left(\prod_{i=1}^n \frac{U_i}{\text{max} U_i}\right)^{\frac{1}{n-1}}}
+$$
+
+### Modification by $\text{fan et al}^{[2]}$.
+
+**Alternatively**, Fan et al. propose a simplified structure derived from variance-like dispersion, which directly captures the imbalance among subsystem indicators:
+
+$$
+C = 1-2\sqrt{\frac{n\sum_{i=1}^n U_i^2 - \left(\sum_{i=1}^n U_i\right)^2}{n^2}}
+$$
+
+## Comprehensive Development Index
+
+The overall development level is defined as:
+
+$$
+T = \sum_{i=1}^{n} \alpha_i U_i
+$$
+
+where $\alpha_i$ are weights with $\sum \alpha_i = 1$.
+
+## Coordination Degree
+
+The coordination degree $D$ integrates interaction $C$ and development $T$:
+
+$$
+D = \sqrt{C \times T}
+$$
+
+where  
+- $C$ measures coupling degree  
+- $T$ measures development level  
+- $D$ reflects coordinated development  
+
+## Metacoupling Perspective
+
+The CCD framework can be extended under the $\text{metacoupling framework}^{[3,4]}$, distinguishing:
+
+- **Intracoupling**  
+- **Pericoupling**  
+- **Telecoupling**  
+
+This enables cross-scale analysis of coupling.
+
+# Example Cases
+
+## Install necessary packages and load data
+
+```{r install_pkgs, eval = FALSE, echo = TRUE}
+install.packages(c("sdsfun", "coupling", "tidyr", "dplyr", "ggplot2"), dep = TRUE)
+```
+
+The `gzma` dataset represents the *Data of Social Space Quality in Guangzhou Metropolitan Areas of China (2010)*. It contains multiple indicators describing urban social space conditions. In particular, four key variables correspond to subsystem scores, including population stability (`PS_Score`), educational level (`EL_Score`), occupational hierarchy (`OH_Score`), and income level (`IL_Score `).
+
+Load the `gzma` dataset from the `sdsfun` package:
+
+```{r load_data}
+gzma = sf::read_sf(system.file('extdata/gzma.gpkg',package = 'sdsfun'))
+gzma
+```
+
+Normalize the `*_Score` columns:
+
+```{r normalize_score}
+dt = apply(sf::st_drop_geometry(gzma), 2,
+           \(.x) (.x - min(.x)) / (max(.x) - min(.x)))
+head(dt)
+```
+
+## Analysis of coupling coordination degree
+
+```{r ccd_standard}
+ccd_standard = coupling::ccd(dt)
+head(ccd_standard)
+```
+
+```{r ccd_wang}
+ccd_wang = coupling::ccd(dt, method = "wang")
+head(ccd_wang)
+```
+
+```{r ccd_fan}
+ccd_fan = coupling::ccd(dt, method = "fan")
+head(ccd_fan)
+```
+
+```{r fig_ccd,fig.width=4.5,fig.height=6.5,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 1**. Spatial distribution of CCD components across three estimation methods. Panels display component C and component D derived from the standard, Wang, and Fan methods, respectively.")}
+ccd_df = do.call(cbind, list(ccd_standard, ccd_wang, ccd_fan))
+names(ccd_df) = paste0(rep(c("standard", "wang", "fan"), each = 2),
+                       "_", rep(c("C", "D"), times = 3))
+fig1 = ccd_df |> 
+  sf::st_set_geometry(sf::st_geometry(gzma)) |> 
+  tidyr::pivot_longer(-geometry, names_to = "var", values_to = "val") |> 
+  dplyr::mutate(var = factor(var, levels = names(ccd_df))) |> 
+  ggplot2::ggplot() +
+  ggplot2::geom_sf(ggplot2::aes(fill = val), color = "grey40", lwd = 0.15) +
+  ggplot2::scale_fill_gradientn(
+    name = "degree",
+    colors = c("#ffffcc", "#d9f0a3", "#addd8e",
+               "#78c679", "#31a354", "#006837")
+  ) +
+  ggplot2::facet_wrap(~var, ncol = 2) +
+  ggplot2::theme_bw(base_family = "serif") +
+  ggplot2::theme(
+    panel.grid = ggplot2::element_blank(),
+    axis.text = ggplot2::element_blank(),
+    axis.ticks = ggplot2::element_blank(),
+    strip.text = ggplot2::element_text(face = "bold", size = 15),
+    legend.title = ggplot2::element_text(size = 16.5),
+    legend.text = ggplot2::element_text(size = 15)
+  )
+fig1
+```
+
+## A Meta-Coupling Analysis
+
+Due to data limitations, here we focus on **peri-coupling** based on a Queen contiguity structure. Pericoupling among neighboring units are further weighted using an inverse distance scheme. The calculation of the coupling coordination degree adopts the formulation proposed by $\text{wang et al}^{[1]}$.
+
+```{r peri_coupling}
+nb = sdsfun::spdep_nb(gzma)
+swm_peri = sdsfun::inverse_distance_swm(gzma)
+for (i in seq_len(nrow(gzma))) {
+  swm_peri[i, seq_len(nrow(gzma))[-nb[[i]]]] = 0
+}
+swm_peri = apply(swm_peri, 1, \(.x) .x / sum(.x))
+
+mc_wang = coupling::metacoupling(dt, swm_peri = swm_peri, method = "wang")
+head(mc_wang)
+```
+
+```{r fig_metacoupling,fig.width=4.5,fig.height=4.5,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 2**. Spatial distribution of intra- and pericoupling CCD components based on the Wang formulation. Panels display coupling degree (C) and coordination degree (D) for intra- and pericoupling, respectively.")}
+fig2 = mc_wang |> 
+  dplyr::select(dplyr::all_of(c("Intra_C", "Intra_D", "Peri_C", "Peri_D"))) |> 
+  sf::st_set_geometry(sf::st_geometry(gzma)) |> 
+  tidyr::pivot_longer(-geometry, names_to = "var", values_to = "val") |> 
+  dplyr::mutate(var = factor(var, 
+                             levels = c("Intra_C", "Intra_D", "Peri_C", "Peri_D"))) |> 
+  ggplot2::ggplot() +
+  ggplot2::geom_sf(ggplot2::aes(fill = val), color = "grey40", lwd = 0.15) +
+  ggplot2::scale_fill_gradientn(
+    name = "degree",
+    colors = c("#ffffcc", "#d9f0a3", "#addd8e",
+               "#78c679", "#31a354", "#006837")
+  ) +
+  ggplot2::facet_wrap(~var, ncol = 2) +
+  ggplot2::theme_bw(base_family = "serif") +
+  ggplot2::theme(
+    panel.grid = ggplot2::element_blank(),
+    axis.text = ggplot2::element_blank(),
+    axis.ticks = ggplot2::element_blank(),
+    strip.text = ggplot2::element_text(face = "bold", size = 15),
+    legend.title = ggplot2::element_text(size = 16.5),
+    legend.text = ggplot2::element_text(size = 15)
+  )
+fig2
+```
+
+## References
+
+[1] Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses and modification of coupling coordination degree model in China. Journal of Natural Resources, 36, 793-810. https://doi.org/10.31497/zrzyxb.20210319
+
+[2] Fan, D., Ke, H. and Cao, R., 2024. Modification and improvement of coupling coordination degree model. Stat. Decis, 40, 41-46. https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007
+
+[3] Tang, P., Huang, J., Zhou, H., Fang, C., Zhan, Y., Huang, W., 2021. Local and telecoupling coordination degree model of urbanization and the eco-environment based on RS and GIS: A case study in the Wuhan urban agglomeration. Sustainable Cities and Society 75, 103405. https://doi.org/10.1016/j.scs.2021.103405
+
+[4] Li, Y., Jia, N., Zheng, L., Yin, C., Chen, K., Sun, N., Jiang, A., Wang, M., Chen, R., Zhou, Z., 2026. A meta-coupling analysis between three-dimensional urbanization and ecosystem services in China’s urban agglomerations. Communications Earth & Environment 7. https://doi.org/10.1038/s43247-025-03047-w
