@@ -73,7 +73,7 @@
             
             <h4 data-toc-skip class="date"><div class="line-block">Last
 update: 2026-05-12<br>
-Last run: 2026-05-11</div></h4>
+Last run: 2026-05-12</div></h4>
       
       <small class="dont-index">Source: <a href="https://github.com/stscl/coupling/blob/main/vignettes/ccd.Rmd" class="external-link"><code>vignettes/ccd.Rmd</code></a></small>
       <div class="d-none name"><code>ccd.Rmd</code></div>
@@ -105,8 +105,7 @@ proposed by modifying the functional form of the coupling degree.</p>
 <h3 id="modified-coupling-degree">Modified Coupling Degree<a class="anchor" aria-label="anchor" href="#modified-coupling-degree"></a>
 </h3>
 <div class="section level4">
-<h4 id="modification-by-textwang-et-al1-">Modification by <span class="math inline">\(\text{wang et
-al}^{[1]}\)</span>.<a class="anchor" aria-label="anchor" href="#modification-by-textwang-et-al1-"></a>
+<h4 id="modification-by-textwang1-">Modification by <span class="math inline">\(\text{wang}^{[1]}\)</span>.<a class="anchor" aria-label="anchor" href="#modification-by-textwang1-"></a>
 </h4>
 <p><strong>First</strong>, Wang et al. introduce a formulation that
 incorporates pairwise differences among subsystems while normalizing
@@ -118,8 +117,7 @@ C = \sqrt{\left[1-\frac{\sum\limits_{i&gt;j,j=1}^{n-1}
 \]</span></p>
 </div>
 <div class="section level4">
-<h4 id="modification-by-textfan-et-al2-">Modification by <span class="math inline">\(\text{fan et
-al}^{[2]}\)</span>.<a class="anchor" aria-label="anchor" href="#modification-by-textfan-et-al2-"></a>
+<h4 id="modification-by-textfan2-">Modification by <span class="math inline">\(\text{fan}^{[2]}\)</span>.<a class="anchor" aria-label="anchor" href="#modification-by-textfan2-"></a>
 </h4>
 <p><strong>Alternatively</strong>, Fan et al. propose a simplified
 structure derived from variance-like dispersion, which directly captures
@@ -299,7 +297,7 @@ methods, respectively.</div>
 <strong>peri-coupling</strong> based on a Queen contiguity structure.
 Pericoupling among neighboring units are further weighted using an
 inverse distance scheme. The calculation of the coupling coordination
-degree adopts the formulation proposed by <span class="math inline">\(\text{wang et al}^{[1]}\)</span>.</p>
+degree adopts the formulation proposed by <span class="math inline">\(\text{wang}^{[1]}\)</span>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nb</span> <span class="op">=</span> <span class="fu">sdsfun</span><span class="fu">::</span><span class="fu"><a href="https://stscl.github.io/sdsfun/reference/spdep_nb.html" class="external-link">spdep_nb</a></span><span class="op">(</span><span class="va">gzma</span><span class="op">)</span></span>
 <span><span class="va">swm_peri</span> <span class="op">=</span> <span class="fu">sdsfun</span><span class="fu">::</span><span class="fu"><a href="https://stscl.github.io/sdsfun/reference/inverse_distance_swm.html" class="external-link">inverse_distance_swm</a></span><span class="op">(</span><span class="va">gzma</span><span class="op">)</span></span>
@@ -353,19 +351,22 @@ intra- and pericoupling, respectively.</div>
 <div class="section level3">
 <h3 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h3>
-<p>[1] Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on
+<ol style="list-style-type: decimal">
+<li><p>Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on
 misuses and modification of coupling coordination degree model in China.
-Journal of Natural Resources, 36, 793-810. <a href="https://doi.org/10.31497/zrzyxb.20210319" class="external-link uri">https://doi.org/10.31497/zrzyxb.20210319</a></p>
-<p>[2] Fan, D., Ke, H. and Cao, R., 2024. Modification and improvement
-of coupling coordination degree model. Stat. Decis, 40, 41-46. <a href="https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007" class="external-link uri">https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007</a></p>
-<p>[3] Tang, P., Huang, J., Zhou, H., Fang, C., Zhan, Y., Huang, W.,
+Journal of Natural Resources, 36, 793-810. <a href="https://doi.org/10.31497/zrzyxb.20210319" class="external-link">https://doi.org/10.31497/zrzyxb.20210319</a></p></li>
+<li><p>Fan, D., Ke, H. and Cao, R., 2024. Modification and improvement
+of coupling coordination degree model. Stat. Decis, 40, 41-46. <a href="https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007" class="external-link">https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007</a></p></li>
+<li><p>Tang, P., Huang, J., Zhou, H., Fang, C., Zhan, Y., Huang, W.,
 2021. Local and telecoupling coordination degree model of urbanization
 and the eco-environment based on RS and GIS: A case study in the Wuhan
-urban agglomeration. Sustainable Cities and Society 75, 103405. <a href="https://doi.org/10.1016/j.scs.2021.103405" class="external-link uri">https://doi.org/10.1016/j.scs.2021.103405</a></p>
-<p>[4] Li, Y., Jia, N., Zheng, L., Yin, C., Chen, K., Sun, N., Jiang,
+urban agglomeration. Sustainable Cities and Society 75, 103405. <a href="https://doi.org/10.1016/j.scs.2021.103405" class="external-link">https://doi.org/10.1016/j.scs.2021.103405</a></p></li>
+<li><p>Li, Y., Jia, N., Zheng, L., Yin, C., Chen, K., Sun, N., Jiang,
 A., Wang, M., Chen, R., Zhou, Z., 2026. A meta-coupling analysis between
 three-dimensional urbanization and ecosystem services in China’s urban
-agglomerations. Communications Earth &amp; Environment 7. <a href="https://doi.org/10.1038/s43247-025-03047-w" class="external-link uri">https://doi.org/10.1038/s43247-025-03047-w</a></p>
+agglomerations. Communications Earth &amp; Environment 7. <a href="https://doi.org/10.1038/s43247-025-03047-w" class="external-link">https://doi.org/10.1038/s43247-025-03047-w</a></p></li>
+</ol>
+<p> </p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

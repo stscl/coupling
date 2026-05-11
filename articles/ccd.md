@@ -22,7 +22,7 @@ modifying the functional form of the coupling degree.
 
 ### Modified Coupling Degree
 
-#### Modification by \\\text{wang et al}^{\[1\]}\\.
+#### Modification by \\\text{wang}^{\[1\]}\\.
 
 **First**, Wang et al. introduce a formulation that incorporates
 pairwise differences among subsystems while normalizing their relative
@@ -33,7 +33,7 @@ magnitudes:
 \left(\prod\_{i=1}^n \frac{U_i}{\text{max} U_i}\right)^{\frac{1}{n-1}}}
 \\
 
-#### Modification by \\\text{fan et al}^{\[2\]}\\.
+#### Modification by \\\text{fan}^{\[2\]}\\.
 
 **Alternatively**, Fan et al. propose a simplified structure derived
 from variance-like dispersion, which directly captures the imbalance
@@ -217,7 +217,7 @@ Due to data limitations, here we focus on **peri-coupling** based on a
 Queen contiguity structure. Pericoupling among neighboring units are
 further weighted using an inverse distance scheme. The calculation of
 the coupling coordination degree adopts the formulation proposed by
-\\\text{wang et al}^{\[1\]}\\.
+\\\text{wang}^{\[1\]}\\.
 
 ``` r
 
@@ -279,23 +279,25 @@ respectively.
 
 ### References
 
-\[1\] Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses
-and modification of coupling coordination degree model in China. Journal
-of Natural Resources, 36, 793-810.
-<https://doi.org/10.31497/zrzyxb.20210319>
+1.  Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses
+    and modification of coupling coordination degree model in China.
+    Journal of Natural Resources, 36, 793-810.
+    <https://doi.org/10.31497/zrzyxb.20210319>
 
-\[2\] Fan, D., Ke, H. and Cao, R., 2024. Modification and improvement of
-coupling coordination degree model. Stat. Decis, 40, 41-46.
-<https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007>
+2.  Fan, D., Ke, H. and Cao, R., 2024. Modification and improvement of
+    coupling coordination degree model. Stat. Decis, 40, 41-46.
+    <https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007>
 
-\[3\] Tang, P., Huang, J., Zhou, H., Fang, C., Zhan, Y., Huang, W.,
-2021. Local and telecoupling coordination degree model of urbanization
-and the eco-environment based on RS and GIS: A case study in the Wuhan
-urban agglomeration. Sustainable Cities and Society 75, 103405.
-<https://doi.org/10.1016/j.scs.2021.103405>
+3.  Tang, P., Huang, J., Zhou, H., Fang, C., Zhan, Y., Huang, W., 2021.
+    Local and telecoupling coordination degree model of urbanization and
+    the eco-environment based on RS and GIS: A case study in the Wuhan
+    urban agglomeration. Sustainable Cities and Society 75, 103405.
+    <https://doi.org/10.1016/j.scs.2021.103405>
 
-\[4\] Li, Y., Jia, N., Zheng, L., Yin, C., Chen, K., Sun, N., Jiang, A.,
-Wang, M., Chen, R., Zhou, Z., 2026. A meta-coupling analysis between
-three-dimensional urbanization and ecosystem services in China’s urban
-agglomerations. Communications Earth & Environment 7.
-<https://doi.org/10.1038/s43247-025-03047-w>
+4.  Li, Y., Jia, N., Zheng, L., Yin, C., Chen, K., Sun, N., Jiang, A.,
+    Wang, M., Chen, R., Zhou, Z., 2026. A meta-coupling analysis between
+    three-dimensional urbanization and ecosystem services in China’s
+    urban agglomerations. Communications Earth & Environment 7.
+    <https://doi.org/10.1038/s43247-025-03047-w>
+
+ 
