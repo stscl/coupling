@@ -6,3 +6,4 @@
 ^pkgdown$
 ^cran-comments\.md$
 ^build-vignettes\.md$
+^CRAN-SUBMISSION$
