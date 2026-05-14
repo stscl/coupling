@@ -19,7 +19,7 @@ within and among coupled systems.
 
 ``` r
 
-install.packages("coupling", dep = TRUE)
+install.packages("coupling", dependencies = TRUE)
 ```
 
 - Install binary version from
@@ -30,7 +30,7 @@ install.packages("coupling", dep = TRUE)
 install.packages("coupling",
                  repos = c("https://stscl.r-universe.dev",
                            "https://cloud.r-project.org"),
-                 dep = TRUE)
+                 dependencies = TRUE)
 ```
 
 - Install from source code on
@@ -38,12 +38,10 @@ install.packages("coupling",
 
 ``` r
 
-if (!requireNamespace("devtools")) {
-    install.packages("devtools")
+if (!requireNamespace("pak", quietly = TRUE)) {
+    install.packages("pak")
 }
-devtools::install_github("stscl/coupling",
-                         build_vignettes = TRUE,
-                         dep = TRUE)
+pak::pak("stscl/coupling", dependencies = TRUE)
 ```
 
 ## References
