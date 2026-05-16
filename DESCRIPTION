@@ -1,6 +1,6 @@
 Package: coupling
 Title: Analysis of Coupling Coordination Degree
-Version: 0.1
+Version: 0.2
 Authors@R: 
     person(given = "Wenbo", family = "Lyu",
            email = "lyu.geosocial@gmail.com", 

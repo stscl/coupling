@@ -2,11 +2,11 @@
 
 <!-- badges: start -->
 
-<!-- [![CRAN](https://www.r-pkg.org/badges/version/coupling)](https://CRAN.R-project.org/package=coupling)
+[![CRAN](https://www.r-pkg.org/badges/version/coupling)](https://CRAN.R-project.org/package=coupling)
 [![CRAN Release](https://www.r-pkg.org/badges/last-release/coupling)](https://CRAN.R-project.org/package=coupling)
 [![CRAN Checks](https://badges.cranchecks.info/worst/coupling.svg)](https://cran.r-project.org/web/checks/check_results_coupling.html)
 [![Downloads_all](https://badgen.net/cran/dt/coupling?color=orange)](https://CRAN.R-project.org/package=coupling)
-[![Downloads_month](https://cranlogs.r-pkg.org/badges/coupling)](https://CRAN.R-project.org/package=coupling) -->
+[![Downloads_month](https://cranlogs.r-pkg.org/badges/coupling)](https://CRAN.R-project.org/package=coupling)
 [![License](https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![Lifecycle: experimental](https://lifecycle.r-lib.org/articles/figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/stscl/coupling/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stscl/coupling/actions/workflows/R-CMD-check.yaml)
