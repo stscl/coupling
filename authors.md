@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/stscl/coupling/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/stscl/coupling/blob/v0.1/inst/CITATION)
 
 Lyu W (2026). *coupling: Analysis of Coupling Coordination Degree*.
 [doi:10.32614/CRAN.package.coupling](https://doi.org/10.32614/CRAN.package.coupling).
