@@ -9,5 +9,9 @@ Authors@R:
 Description: What the package does (one paragraph).
 License: GPL-3
 Encoding: UTF-8
+URL: https://stscl.github.io/coupling/, https://github.com/stscl/coupling
+BugReports: https://github.com/stscl/coupling/issues
+Depends: 
+    R (>= 4.1.0)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.0.0
