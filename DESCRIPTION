@@ -6,7 +6,7 @@ Authors@R:
            email = "lyu.geosocial@gmail.com", 
            role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0002-6003-3800"))
-Description: What the package does (one paragraph).
+Description: Implements coupling coordination degree (CCD) models and supports metacoupling analysis following Tang et al. (2021) <doi:10.1016/j.scs.2021.103405>.
 License: GPL-3
 Encoding: UTF-8
 URL: https://stscl.github.io/coupling/, https://github.com/stscl/coupling
