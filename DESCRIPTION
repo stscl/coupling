@@ -13,5 +13,5 @@ URL: https://stscl.github.io/coupling/, https://github.com/stscl/coupling
 BugReports: https://github.com/stscl/coupling/issues
 Depends: 
     R (>= 4.1.0)
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 8.0.0
+Config/roxygen2/markdown: TRUE
+Config/roxygen2/version: 8.0.0
