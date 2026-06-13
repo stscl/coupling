@@ -16,6 +16,11 @@ Depends:
 LinkingTo: 
     Rcpp
 Imports: 
+    methods,
+    sdsfun,
+    sf,
+    terra
+Suggests: 
     Rcpp
 Config/roxygen2/markdown: TRUE
 Config/roxygen2/version: 8.0.0
