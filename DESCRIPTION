@@ -17,6 +17,5 @@ LinkingTo:
     Rcpp
 Imports: 
     Rcpp
-
 Config/roxygen2/markdown: TRUE
 Config/roxygen2/version: 8.0.0
