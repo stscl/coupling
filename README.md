@@ -52,6 +52,17 @@ devtools::install_github("stscl/coupling",
 
 ## References
 
-Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses and modification of coupling coordination degree model in China. Journal of Natural Resources, 36, 793-810. https://doi.org/10.31497/zrzyxb.20210319.
+Tang, P., Huang, J., Zhou, H., Fang, C., Zhan, Y., Huang, W., 2021. Local and telecoupling coordination degree model of urbanization and the eco-environment based on RS and GIS: A case study in the Wuhan urban agglomeration. Sustainable Cities and Society 75, 103405. [https://doi.org/10.1016/j.scs.2021.103405][1].
 
-Fan, D., Ke, H. and Cao, R., 2024. Modification and improvement of coupling coordination degree model. Stat. Decis, 40, 41-46. https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007.
+Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses and modification of coupling coordination degree model in China. Journal of Natural Resources, 36, 793-810. [https://doi.org/10.31497/zrzyxb.20210319][2].
+
+Fan, D., Ke, H. and Cao, R., 2024. Modification and improvement of coupling coordination degree model. Stat. Decis, 40, 41-46. [https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007][3].
+
+Li, Y., Jia, N., Zheng, L., Yin, C., Chen, K., Sun, N., Jiang, A., Wang, M., Chen, R., Zhou, Z., 2026. A meta-coupling analysis between three-dimensional urbanization and ecosystem services in China’s urban agglomerations. Communications Earth & Environment 7. [https://doi.org/10.1038/s43247-025-03047-w][4].
+
+&nbsp;
+
+[1]: https://doi.org/10.1016/j.scs.2021.103405
+[2]: https://doi.org/10.31497/zrzyxb.20210319
+[3]: https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007
+[4]: https://doi.org/10.1038/s43247-025-03047-w
