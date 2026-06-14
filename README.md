@@ -58,11 +58,14 @@ Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses and modificat
 
 Fan, D., Ke, H. and Cao, R., 2024. Modification and improvement of coupling coordination degree model. Stat. Decis, 40, 41-46. [https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007][3].
 
-Li, Y., Jia, N., Zheng, L., Yin, C., Chen, K., Sun, N., Jiang, A., Wang, M., Chen, R., Zhou, Z., 2026. A meta-coupling analysis between three-dimensional urbanization and ecosystem services in China’s urban agglomerations. Communications Earth & Environment 7. [https://doi.org/10.1038/s43247-025-03047-w][4].
+Xie, A., Zhang, F., Ding, Y., Chen, J., Yang, P., Peng, G., 2025. Exploring the Dynamic Local and Tele‐Coupling Coordination Mechanism of the Ecosystem Services Supply–Demand and Its Driving Forces: Taking China’s Yangtze River Economic Belt as an Example. Land Degradation & Development 36, 3178–3193. [https://doi.org/10.1002/ldr.5559][4].
+
+Li, Y., Jia, N., Zheng, L., Yin, C., Chen, K., Sun, N., Jiang, A., Wang, M., Chen, R., Zhou, Z., 2026. A meta-coupling analysis between three-dimensional urbanization and ecosystem services in China’s urban agglomerations. Communications Earth & Environment 7. [https://doi.org/10.1038/s43247-025-03047-w][5].
 
 &nbsp;
 
 [1]: https://doi.org/10.1016/j.scs.2021.103405
 [2]: https://doi.org/10.31497/zrzyxb.20210319
 [3]: https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007
-[4]: https://doi.org/10.1038/s43247-025-03047-w
+[4]: https://doi.org/10.1002/ldr.5559
+[5]: https://doi.org/10.1038/s43247-025-03047-w
