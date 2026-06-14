@@ -125,10 +125,11 @@ inline std::vector<std::vector<double>> ccd(
     const std::vector<double>& weight,
     const std::string& method = "standard"
 ) {
-    size_t n_units = mat.size();
-    std::vector<std::vector<double>> result(2, std::vector<double>(n_units, 0.0));
-
+    size_t n_units = mat.size(); // number of unit
     size_t p = mat[0].size(); // number of U values per unit
+
+    std::vector<std::vector<double>> result(2, std::vector<double>(n_units, 0.0));
+    
     std::vector<double> C_vals = ccd_c(mat, method); // C values
     result[0] = C_vals;
 
