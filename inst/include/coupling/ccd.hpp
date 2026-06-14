@@ -120,6 +120,29 @@ inline std::vector<double> ccd_c(
     return result;
 }
 
+inline std::vector<std::vector<double>> ccd(
+    const std::vector<std::vector<double>>& mat,
+    const std::vector<double>& weight,
+    const std::string& method = "standard"
+) {
+    size_t n_units = mat.size();
+    std::vector<double> result(2, std::vector<double>(n_units, 0.0));
+
+    size_t p = mat[0].size(); // number of U values per unit
+    std::vector<double> C_vals = ccd_c(mat, method); // C values
+    result[0] = C_vals;
+
+    for (size_t i = 0; i < n_units; ++i) {
+        doule T_val = 0;
+        for (size_t j = 0; j < p; ++p) {
+            T += weight[j] * mat[i][j]; // T = \sum_{j=1}^n w_j \times U_j
+        }
+        result[1][i] = std::sqrt(C_vals[i] * T_val);
+    }
+
+    return result;
+}
+
 } // namespace ccd
 
 }
