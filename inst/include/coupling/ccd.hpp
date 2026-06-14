@@ -71,7 +71,7 @@ inline std::vector<double> ccd_c(
 
             for (size_t j = 0; j < p - 1; ++j) {
                 for (size_t k = j + 1; k < p; ++k) {
-                    sum_dist += std::abs(U[j], U[k]);
+                    sum_dist += std::abs(U[j] - U[k]);
                 }
             }
 
