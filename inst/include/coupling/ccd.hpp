@@ -32,11 +32,6 @@ inline double mean(const std::vector<double>& v) {
     return s / v.size();
 }
 
-// Euclidean distance between scalars (actually abs)
-double scalar_distance(double a, double b) {
-    return std::abs(a - b);
-}
-
 inline std::vector<double> ccd_c(
     const std::vector<std::vector<double>>& mat,
     const std::string& method = "standard"
