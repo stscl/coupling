@@ -14,12 +14,11 @@
 #define COUPLING_CCD_HPP
 
 #include <vector>
+#include <string>
 #include <cmath>
-#include <limits>
 #include <numeric>
-#include <stdexcept>
 #include <algorithm>
-#include <initializer_list>
+#include <stdexcept>
 
 namespace coupling
 {
