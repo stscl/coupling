@@ -14,7 +14,7 @@
 
 <!-- badges: end -->
 
-<a href="https://stscl.github.io/coupling/"><img src="man/figures/logo.png" align="right" hspace="5" vspace="0" width="15%" alt="coupling website: https://stscl.github.io/coupling/"/></a>
+<a href="https://stscl.github.io/coupling/"><img src="man/figures/coupling.png" align="right" hspace="5" vspace="0" width="15%" alt="coupling website: https://stscl.github.io/coupling/"/></a>
 
 ***Coupling** Coordination Analysis*
 
