@@ -18,7 +18,7 @@
 
 ***Coupling** Coordination Analysis*
 
-*coupling* is an R package for analyzing variable interactions using information-theoretic measures. Originally tailored for time series, its methods extend seamlessly to spatial cross-sectional data. Powered by a pure C++ engine with a lightweight R interface, the package also exposes its headers for direct integration into other R packages.
+*coupling* is an R package for coupling coordination analysis based on coupling coordination degree (CCD) models. It incorporates metacoupling frameworks to characterize cross-scale linkages, flows, and feedbacks within and among coupled systems.
 
 > *Refer to the package documentation <https://stscl.github.io/coupling/> for more detailed information.*
 
