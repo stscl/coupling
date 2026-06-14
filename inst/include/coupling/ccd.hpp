@@ -50,13 +50,13 @@ inline std::vector<double> ccd_c(
         // standard
         // =========================
         if (method == "standard") {
-            double prod_sum = 0.0;
+            double prod_sum = 1.0;
             for (double u : U) {
                 // if (u <= 0) throw std::runtime_error("Values must be positive.");
                 prod_sum *= u;
             }
 
-            double geo_mean = std::pow(prod_sum, 1/p);
+            double geo_mean = std::pow(prod_sum, 1.0/p);
             double arith_mean = mean(U);
 
             result[i] = geo_mean / arith_mean;
