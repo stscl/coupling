@@ -43,7 +43,7 @@
  * (2) Wang et al. model:
  *
  *      C = sqrt(
- *              [ 1 − ( ∑_{i>j, j = 1,2,...n-1} |U_i − U_j| ) / ( ∑_{m=1}^{n-1} m ) ]
+ *              [ 1 − ( ∑_{i>j} |U_i − U_j| ) / ( (n−1)n / 2 ) ]
  *              × ( ∏_{i=1}^n (U_i / max(U)) )^(1/(n−1))
  *          )
  *
@@ -92,9 +92,9 @@
  * Input data format
  * ---------------------------------------------------------------------------
  *
- * The input data is organized as:
+ * Matrix input:
  *
- *      mat : matrix (vector<vector<double>>)
+ *      mat : vector<vector<double>>
  *
  * where:
  *
@@ -105,6 +105,19 @@
  *
  *      mat[i] = {U_1, U_2, ..., U_n} for spatial unit i
  *
+ * Single-unit input:
+ *
+ *      vec : vector<double>
+ *
+ * where:
+ *
+ *      • Represents one spatial unit (one observation)
+ *      • Contains all indicator values for that unit
+ *
+ * That is:
+ *
+ *      vec = {U_1, U_2, ..., U_n}
+ *
  * Weights:
  *
  *      weight : vector<double>, length = number of indicators
@@ -113,12 +126,15 @@
  * Output
  * ---------------------------------------------------------------------------
  *
- * The main functions return:
+ * The module provides the following functions:
  *
- *      • C values: vector<double> by ccd_c
- *          Coupling degree for each spatial unit
+ *      • double ccd_c_single(vec, method)
+ *          Computes coupling degree (C) for a single spatial unit
  *
- *      • CCD values: vector<vector<double>> by ccd
+ *      • vector<double> ccd_c(mat, method)
+ *          Computes C for all spatial units
+ *
+ *      • vector<vector<double>> ccd(mat, weight, method)
  *          result[0] = C values
  *          result[1] = D values
  *
@@ -131,11 +147,15 @@
  * • Input values are assumed to be non-negative. For the standard model,
  *   strictly positive values are required due to the geometric mean.
  *
- * • Numerical safeguards are applied to avoid invalid operations such as
- *   negative values under square roots caused by floating-point errors.
+ * • Numerical safeguards may be required to avoid:
+ *      - division by zero
+ *      - negative values under square root due to floating-point errors
  *
  * • The Wang formulation uses pairwise absolute differences as a measure
  *   of dispersion.
+ *
+ * • The ccd_c_single function is useful when computing C for a single
+ *   observation without constructing a full matrix.
  *
  * ---------------------------------------------------------------------------
  * Author: Wenbo Lyu (Github: @SpatLyu)
