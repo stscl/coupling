@@ -251,10 +251,16 @@ inline double ccd_c_single(
     // =========================
     else if (method == "fan") {
         double sum_u = std::accumulate(vec.begin(), vec.end(), 0.0);
+        if (coupling::numericutils::doubleNearlyEqual(sum_u, 0.0)) {
+            return 0.0;
+        }
 
         double sum_u2 = 0.0;
         for (double u : vec) {
             sum_u2 += u * u;
+        }
+        if (coupling::numericutils::doubleNearlyEqual(sum_u2, 0.0)) {
+            return 0.0;
         }
 
         double numerator = p * sum_u2 - sum_u * sum_u;
