@@ -240,7 +240,6 @@ inline double ccd_c_single(
     // fan
     // =========================
     else if (method == "fan") {
-
         double sum_u = std::accumulate(vec.begin(), vec.end(), 0.0);
 
         double sum_u2 = 0.0;
