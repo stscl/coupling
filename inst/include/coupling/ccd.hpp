@@ -15,6 +15,8 @@
  * ---------------------------------------------------------------------------
  * Mathematical formulation
  * ---------------------------------------------------------------------------
+ * 
+ * (See https://github.com/stscl/coupling/discussions/3 for a better reading experience.)
  *
  * Let a system consist of n indicators:
  *
