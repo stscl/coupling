@@ -23,7 +23,7 @@
 // ============================================================
 
 #if defined(Rcpp_hpp) && !defined(COMPILING_COUPLING)
-    #warning "It is recommended to include <coupling.h> alone, as it already includes <Rcpp.h>."
+    #warning "It is recommended to include <coupling.h> alone, as it already includes <Rcpp.h> and <RcppThread.h>."
 #endif
 
 // ============================================================
@@ -31,6 +31,7 @@
 // ============================================================
 
 #include <Rcpp.h>
+#include <RcppThread.h>
 
 // ============================================================
 // Module Headers (Organized by functionality)
