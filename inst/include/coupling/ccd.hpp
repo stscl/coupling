@@ -227,14 +227,16 @@ inline double ccd_c_single(
 
         double max_u = *std::max_element(vec.begin(), vec.end());
 
-        double prod = 1.0;
-        for (double u : vec) {
-            prod *= (u / max_u);
+        if (!coupling::numericutils::doubleNearlyEqual(max_u, 0.0)) {
+            double prod = 1.0;
+            for (double u : vec) {
+                prod *= (u / max_u);
+            }
+
+            double term2 = std::pow(prod, 1.0 / (p - 1));
+
+            C_val = std::sqrt(term1 * term2);
         }
-
-        double term2 = std::pow(prod, 1.0 / (p - 1));
-
-        C_val = std::sqrt(term1 * term2);
     }
 
     // =========================
