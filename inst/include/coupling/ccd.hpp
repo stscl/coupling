@@ -5,7 +5,7 @@
  * ------------------------------------------------
  *
  * This module implements the Coupling Coordination Degree (CCD) framework,
- * a widely used approach for measuring the interaction, coupling strength,
+ * a widely used method for measuring the interaction, coupling strength,
  * and coordinated development among multiple subsystems or indicators.
  *
  * The CCD model evaluates the internal consistency of a system composed of
