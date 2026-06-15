@@ -37,6 +37,7 @@
 // Module Headers (Organized by functionality)
 // ============================================================
 
+#include "coupling/numericutils.hpp"
 #include "coupling/ccd.hpp"
 
 // ============================================================
