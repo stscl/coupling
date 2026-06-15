@@ -350,7 +350,7 @@ inline std::vector<std::vector<double>> ccd(
     result[0] = C_vals;
 
     for (size_t i = 0; i < n_units; ++i) {
-        doule T_val = 0.0;
+        double T_val = 0.0;
         for (size_t j = 0; j < p; ++j) {
             T_val += weight[j] * mat[i][j]; // T = \sum_{j=1}^n w_j \times U_j
         }
