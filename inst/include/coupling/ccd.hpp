@@ -144,6 +144,13 @@
  *
  * • Input values MUST be normalized to [0, 1] or be on a comparable scale.
  *
+ * • If all indicators are zero (i.e., no subsystem development),
+ *   the coupling degree (C) is defined as 0.
+ *
+ *   This avoids undefined operations (e.g., 0/0) and ensures
+ *   that systems without development are not interpreted as
+ *   having perfect coupling.
+ *
  * • The CCD model is scale-sensitive:
  *   - Standard model depends on relative magnitudes
  *   - Wang model depends on pairwise differences and max-normalization
