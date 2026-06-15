@@ -211,9 +211,11 @@ inline double ccd_c_single(
         double geo_mean = std::pow(prod_sum, 1.0/p);
         double arith_mean = mean(vec);
         
-        if (!coupling::numericutils::doubleNearlyEqual(arith_mean, 0.0)) {
-            C_val = geo_mean / arith_mean;
+        if (coupling::numericutils::doubleNearlyEqual(arith_mean, 0.0)) {
+            return 0.0;
         }
+
+        C_val = geo_mean / arith_mean;
     }
 
     // =========================
@@ -234,16 +236,18 @@ inline double ccd_c_single(
 
         double max_u = *std::max_element(vec.begin(), vec.end());
 
-        if (!coupling::numericutils::doubleNearlyEqual(max_u, 0.0)) {
-            double prod = 1.0;
-            for (double u : vec) {
-                prod *= (u / max_u);
-            }
-
-            double term2 = std::pow(prod, 1.0 / (p - 1));
-
-            C_val = std::sqrt(term1 * term2);
+        if (coupling::numericutils::doubleNearlyEqual(max_u, 0.0)) {
+            return 0.0;
         }
+
+        double prod = 1.0;
+        for (double u : vec) {
+            prod *= (u / max_u);
+        }
+
+        double term2 = std::pow(prod, 1.0 / (p - 1));
+
+        C_val = std::sqrt(term1 * term2);
     }
 
     // =========================
@@ -251,17 +255,17 @@ inline double ccd_c_single(
     // =========================
     else if (method == "fan") {
         double sum_u = std::accumulate(vec.begin(), vec.end(), 0.0);
-        if (coupling::numericutils::doubleNearlyEqual(sum_u, 0.0)) {
-            return 0.0;
-        }
+        // if (coupling::numericutils::doubleNearlyEqual(sum_u, 0.0)) {
+        //     return 0.0;
+        // }
 
         double sum_u2 = 0.0;
         for (double u : vec) {
             sum_u2 += u * u;
         }
-        if (coupling::numericutils::doubleNearlyEqual(sum_u2, 0.0)) {
-            return 0.0;
-        }
+        // if (coupling::numericutils::doubleNearlyEqual(sum_u2, 0.0)) {
+        //     return 0.0;
+        // }
 
         double numerator = p * sum_u2 - sum_u * sum_u;
         double denom = p * p;
@@ -276,7 +280,7 @@ inline double ccd_c_single(
         throw std::invalid_argument("Unknown method");
     }
     
-    return C_val;
+    return std::clamp(C_val, 0.0, 1.0);
 }
 
 inline std::vector<double> ccd_c(
