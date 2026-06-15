@@ -41,7 +41,7 @@
  * (2) Wang et al. model:
  *
  *      C = sqrt(
- *              [ 1 − ( ∑_{i>j} |U_i − U_j| ) / ( ∑_{m=1}^{n-1} m ) ]
+ *              [ 1 − ( ∑_{i>j, j = 1,2,...n-1} |U_i − U_j| ) / ( ∑_{m=1}^{n-1} m ) ]
  *              × ( ∏_{i=1}^n (U_i / max(U)) )^(1/(n−1))
  *          )
  *
@@ -113,10 +113,10 @@
  *
  * The main functions return:
  *
- *      • C values: vector<double>
+ *      • C values: vector<double> by ccd_c
  *          Coupling degree for each spatial unit
  *
- *      • CCD values: vector<vector<double>>
+ *      • CCD values: vector<vector<double>> by ccd
  *          result[0] = C values
  *          result[1] = D values
  *
