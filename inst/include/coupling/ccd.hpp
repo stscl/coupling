@@ -164,6 +164,90 @@ inline double mean(const std::vector<double>& v) {
     return s / v.size();
 }
 
+inline double ccd_c_single(
+    const std::vector<double>& vec,
+    const std::string& method = "standard"
+) {
+    size_t p = vec.size(); // number of U values
+    
+    double C_val = 0.0;
+
+    for (size_t i = 0; i < p; ++i) {
+
+        // =========================
+        // standard
+        // =========================
+        if (method == "standard") {
+            double prod_sum = 1.0;
+            for (double u : vec) {
+                // if (u <= 0) throw std::runtime_error("Values must be positive.");
+                prod_sum *= u;
+            }
+
+            double geo_mean = std::pow(prod_sum, 1.0/p);
+            double arith_mean = mean(U);
+
+            C_val = geo_mean / arith_mean;
+        }
+
+        // =========================
+        // wang
+        // =========================
+        else if (method == "wang") {
+
+            double sum_dist = 0.0;
+
+            for (size_t j = 0; j < p - 1; ++j) {
+                for (size_t k = j + 1; k < p; ++k) {
+                    sum_dist += std::abs(vec[j] - vec[k]);
+                }
+            }
+
+            double denom = (p - 1) * p / 2.0;
+            double term1 = 1.0 - (sum_dist / denom);
+            if (term1 < 0) term1 = 0;
+
+            double max_u = *std::max_element(U.begin(), U.end());
+
+            double prod = 1.0;
+            for (double u : U) {
+                prod *= (u / max_u);
+            }
+
+            double term2 = std::pow(prod, 1.0 / (p - 1));
+
+            C_val = std::sqrt(term1 * term2);
+        }
+
+        // =========================
+        // fan
+        // =========================
+        else if (method == "fan") {
+
+            double sum_u = std::accumulate(U.begin(), U.end(), 0.0);
+
+            double sum_u2 = 0.0;
+            for (double u : U) {
+                sum_u2 += u * u;
+            }
+
+            double numerator = p * sum_u2 - sum_u * sum_u;
+            double denom = p * p;
+
+            double val = numerator / denom;
+            if (val < 0) val = 0;
+
+            C_val = 1.0 - 2.0 * std::sqrt(val);
+        }
+
+        else {
+            throw std::invalid_argument("Unknown method");
+        }
+    }
+
+    return C_val;
+}
+
 inline std::vector<double> ccd_c(
     const std::vector<std::vector<double>>& mat,
     const std::string& method = "standard"
