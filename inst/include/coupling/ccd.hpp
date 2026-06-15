@@ -142,20 +142,19 @@
  * Notes
  * ---------------------------------------------------------------------------
  *
- * • All computations are performed independently for each spatial unit.
+ * • Input values MUST be normalized to [0, 1] or be on a comparable scale.
  *
- * • Input values are assumed to be non-negative. For the standard model,
- *   strictly positive values are required due to the geometric mean.
+ * • The CCD model is scale-sensitive:
+ *   - Standard model depends on relative magnitudes
+ *   - Wang model depends on pairwise differences and max-normalization
+ *   - Fan model is variance-based
  *
- * • Numerical safeguards may be required to avoid:
- *      - division by zero
- *      - negative values under square root due to floating-point errors
+ * • Without normalization, the coupling degree (C) may not reflect
+ *   coordination but instead reflect scale dominance.
  *
- * • The Wang formulation uses pairwise absolute differences as a measure
- *   of dispersion.
- *
- * • The ccd_c_single function is useful when computing C for a single
- *   observation without constructing a full matrix.
+ * • Recommended preprocessing:
+ *   - Min-max normalization
+ *   - Z-score normalization (followed by rescaling to [0,1] if needed)
  *
  * ---------------------------------------------------------------------------
  * Author: Wenbo Lyu (Github: @SpatLyu)
