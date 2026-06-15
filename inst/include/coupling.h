@@ -37,15 +37,7 @@
 // Module Headers (Organized by functionality)
 // ============================================================
 
-#include "coupling/embed.hpp"
-#include "coupling/combn.hpp"
-#include "coupling/numericutils.hpp"
-#include "coupling/distance.hpp"
-#include "coupling/neighbor.hpp"
-#include "coupling/symdync.hpp"
-#include "coupling/projection.hpp"
-#include "coupling/patcaus.hpp"
-#include "coupling/fnn.hpp"
+#include "coupling/ccd.hpp"
 
 // ============================================================
 // Convenience Converters (Inline helpers for R/C++ interop)
