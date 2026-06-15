@@ -177,6 +177,7 @@
 #include <numeric>
 #include <algorithm>
 #include <stdexcept>
+#include <RcppThread.h>
 
 namespace coupling
 {
@@ -285,15 +286,22 @@ inline double ccd_c_single(
 
 inline std::vector<double> ccd_c(
     const std::vector<std::vector<double>>& mat,
-    const std::string& method = "standard"
+    const std::string& method = "standard",
+    size_t threads = 1
 ) {
     size_t n_units = mat.size();
     if (n_units == 0) return {};
 
     std::vector<double> result(n_units, 0.0);
-
-    for (size_t i = 0; i < n_units; ++i) {
-        result[i] = ccd_c_single(mat[i], method);
+    
+    if (threads <= 1) {
+        for (size_t i = 0; i < n_units; ++i) {
+            result[i] = ccd_c_single(mat[i], method);
+        }
+    } else {
+        RcppThread::parallelFor(0, n_units, [&](size_t i) {
+            result[i] = ccd_c_single(mat[i], method);
+        }, threads);
     }
 
     return result;
@@ -302,14 +310,15 @@ inline std::vector<double> ccd_c(
 inline std::vector<std::vector<double>> ccd(
     const std::vector<std::vector<double>>& mat,
     const std::vector<double>& weight,
-    const std::string& method = "standard"
+    const std::string& method = "standard",
+    size_t threads = 1
 ) {
     size_t n_units = mat.size(); // number of unit
     size_t p = mat[0].size(); // number of U values per unit
 
     std::vector<std::vector<double>> result(2, std::vector<double>(n_units, 0.0));
     
-    std::vector<double> C_vals = ccd_c(mat, method); // C values
+    std::vector<double> C_vals = ccd_c(mat, method, threads); // C values
     result[0] = C_vals;
 
     for (size_t i = 0; i < n_units; ++i) {
