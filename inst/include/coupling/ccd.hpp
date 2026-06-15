@@ -185,7 +185,7 @@ inline double ccd_c_single(
             }
 
             double geo_mean = std::pow(prod_sum, 1.0/p);
-            double arith_mean = mean(U);
+            double arith_mean = mean(vec);
 
             C_val = geo_mean / arith_mean;
         }
@@ -197,9 +197,9 @@ inline double ccd_c_single(
 
             double sum_dist = 0.0;
 
-            for (size_t j = 0; j < p - 1; ++j) {
-                for (size_t k = j + 1; k < p; ++k) {
-                    sum_dist += std::abs(vec[j] - vec[k]);
+            for (size_t i = 0; i < p - 1; ++i) {
+                for (size_t j = i + 1; j < p; ++j) {
+                    sum_dist += std::abs(vec[i] - vec[j]);
                 }
             }
 
@@ -207,10 +207,10 @@ inline double ccd_c_single(
             double term1 = 1.0 - (sum_dist / denom);
             if (term1 < 0) term1 = 0;
 
-            double max_u = *std::max_element(U.begin(), U.end());
+            double max_u = *std::max_element(vec.begin(), vec.end());
 
             double prod = 1.0;
-            for (double u : U) {
+            for (double u : vec) {
                 prod *= (u / max_u);
             }
 
@@ -224,10 +224,10 @@ inline double ccd_c_single(
         // =========================
         else if (method == "fan") {
 
-            double sum_u = std::accumulate(U.begin(), U.end(), 0.0);
+            double sum_u = std::accumulate(vec.begin(), vec.end(), 0.0);
 
             double sum_u2 = 0.0;
-            for (double u : U) {
+            for (double u : vec) {
                 sum_u2 += u * u;
             }
 
