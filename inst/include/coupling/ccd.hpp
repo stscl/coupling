@@ -203,8 +203,10 @@ inline double ccd_c_single(
 
         double geo_mean = std::pow(prod_sum, 1.0/p);
         double arith_mean = mean(vec);
-
-        C_val = geo_mean / arith_mean;
+        
+        if (!coupling::numericutils::doubleNearlyEqual(arith_mean, 0.0)) {
+            C_val = geo_mean / arith_mean;
+        }
     }
 
     // =========================
