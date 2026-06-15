@@ -4,6 +4,136 @@
  * Coupling Coordination Degree (CCD) Models
  * ------------------------------------------------
  *
+ * This module implements the Coupling Coordination Degree (CCD) framework,
+ * a widely used approach for measuring the interaction, coupling strength,
+ * and coordinated development among multiple subsystems or indicators.
+ *
+ * The CCD model evaluates the internal consistency of a system composed of
+ * multiple variables and further quantifies its coordinated development level
+ * by combining coupling strength with a composite development index.
+ *
+ * ---------------------------------------------------------------------------
+ * Mathematical formulation
+ * ---------------------------------------------------------------------------
+ *
+ * Let a system consist of n indicators:
+ *
+ *      U = {U1, U2, ..., Un}
+ *
+ * For each spatial unit (or observation), the CCD model is computed based on
+ * the vector U.
+ *
+ * ---------------------------------------------------------------------------
+ * 1. Coupling degree (C)
+ * ---------------------------------------------------------------------------
+ *
+ * Three alternative formulations are supported:
+ *
+ * (1) Standard coupling model:
+ *
+ *      C = [ (∏_{i=1}^n U_i) / ( (1/n * ∑_{i=1}^n U_i)^n ) ]^(1/n)
+ *
+ * This formulation reflects the balance among indicators using the ratio of
+ * geometric mean to arithmetic mean.
+ *
+ * ---------------------------------------------------------------------------
+ *
+ * (2) Wang et al. model:
+ *
+ *      C = sqrt(
+ *              [ 1 − ( ∑_{i>j} |U_i − U_j| ) / ( ∑_{m=1}^{n-1} m ) ]
+ *              × ( ∏_{i=1}^n (U_i / max(U)) )^(1/(n−1))
+ *          )
+ *
+ * This formulation incorporates both:
+ *
+ *      • dispersion among indicators (pairwise differences)
+ *      • relative development level (normalized by max value)
+ *
+ * ---------------------------------------------------------------------------
+ *
+ * (3) Fan et al. model:
+ *
+ *      C = 1 − 2 * sqrt(
+ *              ( n * ∑_{i=1}^n U_i^2 − (∑_{i=1}^n U_i)^2 ) / n^2
+ *          )
+ *
+ * This formulation is based on variance structure and reflects inequality
+ * among indicators.
+ *
+ * ---------------------------------------------------------------------------
+ * 2. Composite development index (T)
+ * ---------------------------------------------------------------------------
+ *
+ * A weighted linear aggregation of indicators:
+ *
+ *      T = ∑_{i=1}^n w_i * U_i
+ *
+ * subject to:
+ *
+ *      ∑_{i=1}^n w_i = 1
+ *
+ * where w_i are user-provided weights.
+ *
+ * ---------------------------------------------------------------------------
+ * 3. Coupling coordination degree (D)
+ * ---------------------------------------------------------------------------
+ *
+ * The final CCD index is defined as:
+ *
+ *      D = sqrt(C × T)
+ *
+ * This combines system interaction (C) with development level (T),
+ * providing an overall measure of coordinated development.
+ *
+ * ---------------------------------------------------------------------------
+ * Input data format
+ * ---------------------------------------------------------------------------
+ *
+ * The input data is organized as:
+ *
+ *      mat : matrix (vector<vector<double>>)
+ *
+ * where:
+ *
+ *      • Each row corresponds to one spatial unit (or observation)
+ *      • Each column corresponds to one indicator U_i
+ *
+ * That is:
+ *
+ *      mat[i] = {U_1, U_2, ..., U_n} for spatial unit i
+ *
+ * Weights:
+ *
+ *      weight : vector<double>, length = number of indicators
+ *
+ * ---------------------------------------------------------------------------
+ * Output
+ * ---------------------------------------------------------------------------
+ *
+ * The main functions return:
+ *
+ *      • C values: vector<double>
+ *          Coupling degree for each spatial unit
+ *
+ *      • CCD values: vector<vector<double>>
+ *          result[0] = C values
+ *          result[1] = D values
+ *
+ * ---------------------------------------------------------------------------
+ * Notes
+ * ---------------------------------------------------------------------------
+ *
+ * • All computations are performed independently for each spatial unit.
+ *
+ * • Input values are assumed to be non-negative. For the standard model,
+ *   strictly positive values are required due to the geometric mean.
+ *
+ * • Numerical safeguards are applied to avoid invalid operations such as
+ *   negative values under square roots caused by floating-point errors.
+ *
+ * • The Wang formulation uses pairwise absolute differences as a measure
+ *   of dispersion.
  *
  * ---------------------------------------------------------------------------
  * Author: Wenbo Lyu (Github: @SpatLyu)
