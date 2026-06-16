@@ -28,10 +28,6 @@ A data.frame with:
 Coupling Coordination Degree (CCD)
 }
 \details{
-The coordination degree is defined as:
-\deqn{D = \sqrt{C \times T}}
-where \eqn{T} is the weighted sum of indicators.
-
 Full model definitions and formulas are available at:
 \url{https://github.com/stscl/coupling/discussions/3}
 }
