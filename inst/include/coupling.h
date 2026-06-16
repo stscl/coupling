@@ -39,6 +39,7 @@
 
 #include "coupling/numericutils.hpp"
 #include "coupling/ccd.hpp"
+#include "coupling/metacoupling.hpp"
 
 // ============================================================
 // Convenience Converters (Inline helpers for R/C++ interop)
