@@ -1,4 +1,32 @@
 url: https://stscl.github.io/coupling/
 template:
   bootstrap: 5
+  math-rendering: mathjax
+  light-switch: true
 
+navbar:
+  structure:
+    right:  [search, github]
+    left: [reference, articles, news]
+  bg: custom
+  components:
+    articles:
+      # text: Vignettes
+      # menu:
+      # - text: Coupling Coordination Degree Models
+      #   href: articles/ccd.html
+
+home:
+  title: |
+    ccd | Coupling Coordination Analysis
+authors:
+  Wenbo Lyu:
+    href: https://spatlyu.github.io/
+
+reference:
+
+- title: Coupling Coordination Analysis
+
+- subtitle: coupling coordination degree
+  contents:
+  - ccd
