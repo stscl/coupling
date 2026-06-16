@@ -2,6 +2,7 @@
 // Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #include "../inst/include/coupling.h"
+#include <RcppThread.h>
 #include <Rcpp.h>
 
 using namespace Rcpp;
@@ -12,20 +13,21 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // RcppCCD
-Rcpp::DataFrame RcppCCD(const Rcpp::NumericMatrix& mat, const Rcpp::NumericVector& weight, const std::string& method);
-RcppExport SEXP _coupling_RcppCCD(SEXP matSEXP, SEXP weightSEXP, SEXP methodSEXP) {
+Rcpp::DataFrame RcppCCD(const Rcpp::NumericMatrix& mat, const Rcpp::NumericVector& weight, const std::string& method, int threads);
+RcppExport SEXP _coupling_RcppCCD(SEXP matSEXP, SEXP weightSEXP, SEXP methodSEXP, SEXP threadsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type mat(matSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type weight(weightSEXP);
     Rcpp::traits::input_parameter< const std::string& >::type method(methodSEXP);
-    rcpp_result_gen = Rcpp::wrap(RcppCCD(mat, weight, method));
+    Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(RcppCCD(mat, weight, method, threads));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_coupling_RcppCCD", (DL_FUNC) &_coupling_RcppCCD, 3},
+    {"_coupling_RcppCCD", (DL_FUNC) &_coupling_RcppCCD, 4},
     {NULL, NULL, 0}
 };
 
