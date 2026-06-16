@@ -24,7 +24,8 @@ inline std::vector<std::vector<double>> metacoupling_c(
     const std::string& method = "standard",
     size_t threads = 1
 ) {
-    size_t n_units = mat.size();
+    size_t n_units = mat.size(); // number of observationa
+    size_t p = mat[0].size(); // number of U values
 
     std::vector<std::vector<double>> result(
         n_units,
