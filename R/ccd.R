@@ -22,6 +22,9 @@
 #'
 #' Full model definitions and formulas are available at:
 #' \url{https://github.com/stscl/coupling/discussions/3}
+#' 
+#' @note
+#' Input values should be normalized to [0, 1].
 #'
 #' @examples
 #' set.seed(42)
