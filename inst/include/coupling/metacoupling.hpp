@@ -21,6 +21,8 @@
  * Mathematical formulation
  * ---------------------------------------------------------------------------
  *
+ * (See https://github.com/stscl/coupling/discussions/8 for a better reading experience.)
+ *
  * Let there be:
  *
  *      • n spatial units
