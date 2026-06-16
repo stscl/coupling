@@ -178,6 +178,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <RcppThread.h>
+#include "coupling/numericutils.hpp"
 
 namespace coupling
 {
