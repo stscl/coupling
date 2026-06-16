@@ -131,21 +131,28 @@
  *
  *      • length = number of indicators
  *
- * ---------------------------------------------------------------------------
+  * ---------------------------------------------------------------------------
  * Output
  * ---------------------------------------------------------------------------
  *
  * metacoupling_c:
  *
- *      result[i] = {C_intra, C_peri, C_tele}
+ *      result is a 3 × n_units matrix:
+ *
+ *          result[0][i] = C_intra(i)
+ *          result[1][i] = C_peri(i)
+ *          result[2][i] = C_tele(i)
  *
  * metacoupling:
  *
- *      result[i] = {
- *          C_intra, D_intra,
- *          C_peri,  D_peri,
- *          C_tele,  D_tele
- *      }
+ *      result is a 6 × n_units matrix:
+ *
+ *          result[0][i] = C_intra(i)
+ *          result[1][i] = D_intra(i)
+ *          result[2][i] = C_peri(i)
+ *          result[3][i] = D_peri(i)
+ *          result[4][i] = C_tele(i)
+ *          result[5][i] = D_tele(i)
  *
  * ---------------------------------------------------------------------------
  * Notes
