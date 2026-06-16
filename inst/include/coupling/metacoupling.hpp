@@ -121,19 +121,20 @@ inline std::vector<std::vector<double>> metacoupling_c(
             double w_peri = swm_peri[s][j];
             double w_tele = swm_tele[s][j];
 
-            // Skip if no spatial interaction
-            if (w_peri == 0.0 && w_tele == 0.0) continue;
+            // Skip if no interaction
+            if (coupling::numericutils::doubleNearlyEqual(w_peri, 0.0) && 
+                coupling::numericutils::doubleNearlyEqual(w_tele, 0.0)) continue;
 
             // Compute symmetric coupling between (s, j)
             double c_val = compute_pair(s, j);
 
             // 3. Weighted aggregation
             // Since SWM is symmetric, no need to compute (j, s) separately
-            if (w_peri != 0.0) {
+            if (!coupling::numericutils::doubleNearlyEqual(w_peri, 0.0)) {
                 peri_sum += w_peri * c_val;
             }
 
-            if (w_tele != 0.0) {
+            if (!coupling::numericutils::doubleNearlyEqual(w_tele, 0.0)) {
                 tele_sum += w_tele * c_val;
             }
         }
