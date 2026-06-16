@@ -199,12 +199,12 @@ inline std::vector<std::vector<double>> metacoupling_c(
     size_t p = mat[0].size();
 
     // Output:
-    // [i][0] = intra-coupling (original CCD for unit i)
-    // [i][1] = peri-coupling
-    // [i][2] = tele-coupling
+    // [0][i] = intra-coupling (original CCD for unit i)
+    // [1][i] = peri-coupling
+    // [2][i] = tele-coupling
     std::vector<std::vector<double>> result(
-        n_units,
-        std::vector<double>(3, std::numeric_limits<double>::quiet_NaN())
+        3,
+        std::vector<double>(n_units, std::numeric_limits<double>::quiet_NaN())
     );
 
     if (p <= 1) return result;
@@ -271,7 +271,7 @@ inline std::vector<std::vector<double>> metacoupling_c(
     auto worker = [&](size_t s) {
 
         // 1. Intra-coupling (original system)
-        result[s][0] = coupling::ccd::ccd_c_single(mat[s], method);
+        result[0][s] = coupling::ccd::ccd_c_single(mat[s], method);
 
         double peri_sum = 0.0;
         double tele_sum = 0.0;
@@ -300,8 +300,8 @@ inline std::vector<std::vector<double>> metacoupling_c(
             }
         }
 
-        result[s][1] = peri_sum;
-        result[s][2] = tele_sum;
+        result[1][s] = peri_sum;
+        result[2][s] = tele_sum;
     };
 
     // ============================================================
@@ -328,10 +328,20 @@ inline std::vector<std::vector<double>> metacoupling(
 ) {
     size_t n_units = mat.size();
     size_t p = mat[0].size();
-
+    
+    // ============================================================
+    // Output: 6 × n_units
+    //
+    // [0] = Intra_C
+    // [1] = Intra_D
+    // [2] = Peri_C
+    // [3] = Peri_D
+    // [4] = Tele_C
+    // [5] = Tele_D
+    // ============================================================
     std::vector<std::vector<double>> result(
-        n_units,
-        std::vector<double>(6, std::numeric_limits<double>::quiet_NaN())
+        6,
+        std::vector<double>(n_units, std::numeric_limits<double>::quiet_NaN())
     );
 
     if (p <= 1) return result;
@@ -386,11 +396,11 @@ inline std::vector<std::vector<double>> metacoupling(
     for (size_t s = 0; s < n_units; ++s) {
 
         // ---- intra ----
-        double C_intra = C_res[s][0];
+        double C_intra = C_res[0][s];
         double T_intra = compute_T_intra(s);
 
-        result[s][0] = C_intra;
-        result[s][1] = std::sqrt(C_intra * T_intra);
+        result[0][s] = C_intra;
+        result[1][s] = std::sqrt(C_intra * T_intra);
 
         double peri_T_sum = 0.0;
         double tele_T_sum = 0.0;
@@ -415,14 +425,14 @@ inline std::vector<std::vector<double>> metacoupling(
             }
         }
 
-        double C_peri = C_res[s][1];
-        double C_tele = C_res[s][2];
+        double C_peri = C_res[1][s];
+        double C_tele = C_res[2][s];
 
-        result[s][2] = C_peri;
-        result[s][3] = std::sqrt(C_peri * peri_T_sum);
+        result[2][s] = C_peri;
+        result[3][s] = std::sqrt(C_peri * peri_T_sum);
 
-        result[s][4] = C_tele;
-        result[s][5] = std::sqrt(C_tele * tele_T_sum);
+        result[4][s] = C_tele;
+        result[5][s] = std::sqrt(C_tele * tele_T_sum);
     }
 
     return result;
