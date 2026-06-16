@@ -150,6 +150,116 @@ inline std::vector<std::vector<double>> metacoupling_c(
     return result;
 }
 
+inline std::vector<std::vector<double>> metacoupling( 
+    const std::vector<std::vector<double>>& mat,
+    const std::vector<std::vector<double>>& swm_peri,
+    const std::vector<std::vector<double>>& swm_tele,
+    const std::vector<double>& weight,
+    const std::string& method = "standard",
+    size_t threads = 1
+) {
+    size_t n_units = mat.size();
+    size_t p = mat[0].size();
+
+    std::vector<std::vector<double>> result(
+        n_units,
+        std::vector<double>(6, std::numeric_limits<double>::quiet_NaN())
+    );
+
+    if (p <= 1) return result;
+
+    size_t full_perm = 1ULL << p;
+
+    // ============================================================
+    // Step 1: reuse existing C computation
+    // ============================================================
+    auto C_res = metacoupling_c(mat, swm_peri, swm_tele, method, threads);
+
+    // ============================================================
+    // Step 2: T computation
+    // ============================================================
+    auto compute_T_intra = [&](size_t i) {
+        double t = 0.0;
+        for (size_t k = 0; k < p; ++k) {
+            t += weight[k] * mat[i][k];
+        }
+        return t;
+    };
+
+    auto compute_pair_T = [&](size_t i, size_t j) {
+
+        double sum_t = 0.0;
+        size_t count = 0;
+
+        for (size_t mask = 0; mask < full_perm; ++mask) {
+
+            if (mask == 0 || mask == (full_perm - 1)) continue;
+
+            double t_val = 0.0;
+
+            for (size_t k = 0; k < p; ++k) {
+                if (mask & (1ULL << k)) {
+                    t_val += weight[k] * mat[i][k];
+                } else {
+                    t_val += weight[k] * mat[j][k];
+                }
+            }
+
+            sum_t += t_val;
+            ++count;
+        }
+
+        return sum_t / static_cast<double>(count);
+    };
+
+    // ============================================================
+    // Step 3: assemble results
+    // ============================================================
+    for (size_t s = 0; s < n_units; ++s) {
+
+        // ---- intra ----
+        double C_intra = C_res[s][0];
+        double T_intra = compute_T_intra(s);
+
+        result[s][0] = C_intra;
+        result[s][1] = std::sqrt(C_intra * T_intra);
+
+        double peri_T_sum = 0.0;
+        double tele_T_sum = 0.0;
+
+        // ---- interactions ----
+        for (size_t j = 0; j < n_units; ++j) {
+
+            double w_peri = swm_peri[s][j];
+            double w_tele = swm_tele[s][j];
+
+            if (coupling::numericutils::doubleNearlyEqual(w_peri, 0.0) && 
+                coupling::numericutils::doubleNearlyEqual(w_tele, 0.0)) continue;
+
+            double t_val = compute_pair_T(s, j);
+
+            if (!coupling::numericutils::doubleNearlyEqual(w_peri, 0.0)) {
+                peri_T_sum += w_peri * t_val;
+            }
+
+            if (!coupling::numericutils::doubleNearlyEqual(w_tele, 0.0)) {
+                tele_T_sum += w_tele * t_val;
+            }
+        }
+
+        double C_peri = C_res[s][1];
+        double C_tele = C_res[s][2];
+
+        result[s][2] = C_peri;
+        result[s][3] = std::sqrt(C_peri * peri_T_sum);
+
+        result[s][4] = C_tele;
+        result[s][5] = std::sqrt(C_tele * tele_T_sum);
+    }
+
+    return result;
+}
+
 } // namespace metacoupling
 
 }
