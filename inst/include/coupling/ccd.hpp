@@ -233,7 +233,7 @@ inline double ccd_c_single(
 
         double denom = (p - 1) * p / 2.0;
         double term1 = 1.0 - (sum_dist / denom);
-        if (term1 < 0) term1 = 0;
+        // if (term1 < 0) term1 = 0;
 
         double max_u = *std::max_element(vec.begin(), vec.end());
 
