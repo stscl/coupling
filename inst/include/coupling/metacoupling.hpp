@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <limits>
 #include <numeric>
 #include <algorithm>
 #include <stdexcept>
@@ -16,114 +17,17 @@ namespace coupling
 namespace metacoupling
 {
 
-// mean
-inline double mean(const std::vector<double>& v) {
-    double s = std::accumulate(v.begin(), v.end(), 0.0);
-    return s / v.size();
-}
-
-inline double ccd_c_single(
-    const std::vector<double>& vec,
-    const std::string& method = "standard"
-) {
-    size_t p = vec.size(); // number of U values
-    
-    double C_val = 0.0;
-
-    // =========================
-    // standard
-    // =========================
-    if (method == "standard") {
-        double prod_sum = 1.0;
-        for (double u : vec) {
-            // if (u <= 0) throw std::runtime_error("Values must be positive.");
-            prod_sum *= u;
-        }
-
-        double geo_mean = std::pow(prod_sum, 1.0/p);
-        double arith_mean = mean(vec);
-        
-        if (coupling::numericutils::doubleNearlyEqual(arith_mean, 0.0)) {
-            return 0.0;
-        }
-
-        C_val = geo_mean / arith_mean;
-    }
-
-    // =========================
-    // wang
-    // =========================
-    else if (method == "wang") {
-        double sum_dist = 0.0;
-
-        for (size_t i = 0; i < p - 1; ++i) {
-            for (size_t j = i + 1; j < p; ++j) {
-                sum_dist += std::abs(vec[i] - vec[j]);
-            }
-        }
-
-        double denom = (p - 1) * p / 2.0;
-        double term1 = 1.0 - (sum_dist / denom);
-        // if (term1 < 0) term1 = 0;
-
-        double max_u = *std::max_element(vec.begin(), vec.end());
-
-        if (coupling::numericutils::doubleNearlyEqual(max_u, 0.0)) {
-            return 0.0;
-        }
-
-        double prod = 1.0;
-        for (double u : vec) {
-            prod *= (u / max_u);
-        }
-
-        double term2 = std::pow(prod, 1.0 / (p - 1));
-
-        C_val = std::sqrt(term1 * term2);
-    }
-
-    // =========================
-    // fan
-    // =========================
-    else if (method == "fan") {
-        double sum_u = std::accumulate(vec.begin(), vec.end(), 0.0);
-        // if (coupling::numericutils::doubleNearlyEqual(sum_u, 0.0)) {
-        //     return 0.0;
-        // }
-
-        double sum_u2 = 0.0;
-        for (double u : vec) {
-            sum_u2 += u * u;
-        }
-        // if (coupling::numericutils::doubleNearlyEqual(sum_u2, 0.0)) {
-        //     return 0.0;
-        // }
-
-        double numerator = p * sum_u2 - sum_u * sum_u;
-        double denom = p * p;
-
-        double val = numerator / denom;
-        if (val < 0) val = 0;
-
-        C_val = 1.0 - 2.0 * std::sqrt(val);
-    }
-
-    else {
-        throw std::invalid_argument("Unknown method");
-    }
-    
-    return std::clamp(C_val, 0.0, 1.0);
-}
-
-inline std::vector<double> ccd_c(
+inline std::vector<double> metacoupling_c(
     const std::vector<std::vector<double>>& mat,
+    const std::vector<std::vector<double>>& swm_peri,
+    const std::vector<std::vector<double>>& swm_tele,
     const std::string& method = "standard",
     size_t threads = 1
 ) {
     size_t n_units = mat.size();
-    if (n_units == 0) return {};
 
-    std::vector<double> result(n_units, 0.0);
+    std::vector<double> result(3, std::numeric_limits<double>::quiet_NaN());
+    if (n_units == 0) return result;
     
     if (threads <= 1) {
         for (size_t i = 0; i < n_units; ++i) {
