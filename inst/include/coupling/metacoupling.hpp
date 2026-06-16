@@ -1,3 +1,170 @@
+/******************************************************************************
+ * File: metacoupling.hpp
+ *
+ * Metacoupling Model (Extension of CCD)
+ * ------------------------------------------------
+ *
+ * This module implements the metacoupling framework, an extension of the
+ * Coupling Coordination Degree (CCD) model, designed to measure both
+ * intra-system and inter-system coupling relationships across spatial units.
+ *
+ * The metacoupling model integrates:
+ *
+ *      • intra-unit coupling (within a spatial unit)
+ *      • peri-coupling (short-distance interactions)
+ *      • tele-coupling (long-distance interactions)
+ *
+ * It further extends the CCD framework by introducing a permutation-based
+ * cross-system coupling mechanism.
+ *
+ * ---------------------------------------------------------------------------
+ * Mathematical formulation
+ * ---------------------------------------------------------------------------
+ *
+ * Let there be:
+ *
+ *      • n spatial units
+ *      • p indicators per unit
+ *
+ * For unit i:
+ *
+ *      U_i = {U_{i1}, U_{i2}, ..., U_{ip}}
+ *
+ * ---------------------------------------------------------------------------
+ * 1. Intra-system coupling (C_intra)
+ * ---------------------------------------------------------------------------
+ *
+ * Standard CCD coupling computed for each unit:
+ *
+ *      C_intra(i) = CCD(U_i)
+ *
+ * where CCD is defined in ccd.hpp.
+ *
+ * ---------------------------------------------------------------------------
+ * 2. Inter-system metacoupling (C_ij)
+ * ---------------------------------------------------------------------------
+ *
+ * For two units i and j, metacoupling is defined by constructing
+ * mixed systems through all possible indicator-level combinations:
+ *
+ *      V(mask) = {v_1, v_2, ..., v_p}
+ *
+ * where:
+ *
+ *      v_k = U_{ik}   if bit k in mask = 1
+ *      v_k = U_{jk}   if bit k in mask = 0
+ *
+ * All binary masks are enumerated:
+ *
+ *      mask ∈ {0, 1}^p
+ *
+ * EXCLUDING:
+ *
+ *      • mask = 0            (all indicators from j)
+ *      • mask = 2^p − 1      (all indicators from i)
+ *
+ * Total combinations used:
+ *
+ *      2^p − 2
+ *
+ * The inter-system coupling is:
+ *
+ *      C_ij = mean over all valid masks of CCD(V(mask))
+ *
+ * ---------------------------------------------------------------------------
+ * 3. Spatial aggregation (peri / tele)
+ * ---------------------------------------------------------------------------
+ *
+ * Given spatial weight matrices:
+ *
+ *      W_peri  (short-distance interactions)
+ *      W_tele  (long-distance interactions)
+ *
+ * Both are assumed to be symmetric.
+ *
+ * Aggregated coupling:
+ *
+ *      C_peri(i) = Σ_j W_peri(i,j) * C_ij
+ *      C_tele(i) = Σ_j W_tele(i,j) * C_ij
+ *
+ * ---------------------------------------------------------------------------
+ * 4. Composite development index (T)
+ * ---------------------------------------------------------------------------
+ *
+ * For each system:
+ *
+ *      T = Σ_k w_k * U_k
+ *
+ * For inter-system:
+ *
+ *      T_ij = mean over all permutations of T(V(mask))
+ *
+ * ---------------------------------------------------------------------------
+ * 5. Coupling coordination degree (D)
+ * ---------------------------------------------------------------------------
+ *
+ * Final metric:
+ *
+ *      D = sqrt(C × T)
+ *
+ * Applied to:
+ *
+ *      • intra-system
+ *      • peri-coupling
+ *      • tele-coupling
+ *
+ * ---------------------------------------------------------------------------
+ * Input data format
+ * ---------------------------------------------------------------------------
+ *
+ * mat : vector<vector<double>>
+ *
+ *      • rows = spatial units
+ *      • columns = indicators
+ *      • values MUST be normalized to [0,1]
+ *
+ * swm_peri / swm_tele:
+ *
+ *      • symmetric spatial weight matrices (n × n)
+ *
+ * weight:
+ *
+ *      • length = number of indicators
+ *
+ * ---------------------------------------------------------------------------
+ * Output
+ * ---------------------------------------------------------------------------
+ *
+ * metacoupling_c:
+ *
+ *      result[i] = {C_intra, C_peri, C_tele}
+ *
+ * metacoupling:
+ *
+ *      result[i] = {
+ *          C_intra, D_intra,
+ *          C_peri,  D_peri,
+ *          C_tele,  D_tele
+ *      }
+ *
+ * ---------------------------------------------------------------------------
+ * Notes
+ * ---------------------------------------------------------------------------
+ *
+ * • The number of inter-system combinations grows exponentially (2^p − 2)
+ *
+ * • This framework captures cross-unit structural interactions
+ *   at the indicator level, rather than treating systems as indivisible units
+ *
+ * • Input normalization is critical for meaningful interpretation
+ *
+ * • Computational cost increases rapidly with p
+ *
+ * ---------------------------------------------------------------------------
+ * Author: Wenbo Lyu (Github: @SpatLyu)
+ * License: GPL-3
+ ******************************************************************************/
+
 #ifndef COUPLING_METACOUPLING_HPP
 #define COUPLING_METACOUPLING_HPP
 
