@@ -197,6 +197,7 @@ inline double ccd_c_single(
     const std::string& method = "standard"
 ) {
     size_t p = vec.size(); // number of U values
+    if (p <= 1) return std::numeric_limits<double>::quiet_NaN();
     
     double C_val = 0.0;
 

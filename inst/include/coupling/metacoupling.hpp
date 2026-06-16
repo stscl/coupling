@@ -39,6 +39,8 @@ inline std::vector<std::vector<double>> metacoupling_c(
         std::vector<double>(3, std::numeric_limits<double>::quiet_NaN())
     );
 
+    if (p <= 1) return result;
+
     // Total number of binary combinations = 2^p
     size_t full_perm = 1ULL << p;
 
