@@ -5,3 +5,7 @@ RcppCCD <- function(mat, weight, method = "standard", threads = 1L) {
     .Call(`_coupling_RcppCCD`, mat, weight, method, threads)
 }
 
+RcppMetaCoupling <- function(mat, swm_peri, swm_tele, weight, method = "standard", threads = 1L) {
+    .Call(`_coupling_RcppMetaCoupling`, mat, swm_peri, swm_tele, weight, method, threads)
+}
+
