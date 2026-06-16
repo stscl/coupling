@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include <RcppThread.h>
 #include "coupling/ccd.hpp"
+#include "coupling/numericutils.hpp"
 
 namespace coupling
 {
