@@ -48,10 +48,10 @@ Rcpp::DataFrame RcppMetaCoupling(
     
     return Rcpp::DataFrame::create( 
         Rcpp::Named("Intra_C") = res[0], 
-        Rcpp::Named("Peri_C") = res[1], 
-        Rcpp::Named("Tele_C") = res[2], 
-        Rcpp::Named("Intra_D") = res[3], 
-        Rcpp::Named("Peri_D") = res[4], 
+        Rcpp::Named("Intra_D") = res[1], 
+        Rcpp::Named("Peri_C") = res[2], 
+        Rcpp::Named("Peri_D") = res[3], 
+        Rcpp::Named("Tele_C") = res[4], 
         Rcpp::Named("Tele_D") = res[5]
     );
 }
