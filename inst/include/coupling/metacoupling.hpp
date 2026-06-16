@@ -39,54 +39,45 @@ inline std::vector<std::vector<double>> metacoupling_c(
         std::vector<double>(3, std::numeric_limits<double>::quiet_NaN())
     );
 
-    // Total number of full binary combinations = 2^p
-    // Each bit represents whether a dimension comes from unit i or unit j
+    // Total number of binary combinations = 2^p
     size_t full_perm = 1ULL << p;
 
     // ============================================================
-    // Compute coupling between a pair (i, j)
-    // using HALF of the full permutation space: 2^(p-1)
+    // Compute metacoupling between unit i and j
+    //
+    // Definition:
+    // - Enumerate ALL mixed systems
+    // - Each dimension independently comes from i or j
+    // - EXCLUDE:
+    //      mask == 0           → all from j
+    //      mask == full_perm-1 → all from i
+    //
+    // Total combinations used = 2^p - 2
     // ============================================================
     auto compute_pair = [&](size_t i, size_t j) {
 
         double sum_c = 0.0;
         size_t count = 0;
 
-        // Iterate over all 2^p binary masks
         for (size_t mask = 0; mask < full_perm; ++mask) {
 
             // ----------------------------------------------------
-            // Symmetry reduction:
-            // For any mask, its complement (~mask) produces
-            // the same combination but with i and j swapped.
-            //
-            // Example:
-            // mask      = 0101
-            // complement= 1010
-            //
-            // These two correspond to equivalent mixed systems.
-            //
-            // To avoid double counting, we only keep one of them:
-            // enforce: mask <= complement
+            // Remove trivial (non-mixed) systems
             // ----------------------------------------------------
-            size_t complement = (~mask) & (full_perm - 1);
+            if (mask == 0 || mask == (full_perm - 1)) continue;
 
-            if (mask > complement) continue;
-
-            // Construct a mixed indicator vector
+            // ----------------------------------------------------
+            // Construct mixed system vector
+            //
+            // Bit k of mask determines source:
+            //   1 → take from unit i
+            //   0 → take from unit j
+            //
+            // Example (p = 3):
+            // mask = 101 → [i, j, i]
+            // ----------------------------------------------------
             std::vector<double> vec(p);
 
-            // ----------------------------------------------------
-            // Bitwise construction:
-            // For each dimension k:
-            //
-            // if bit k == 1 → take value from unit i
-            // if bit k == 0 → take value from unit j
-            //
-            // This ensures:
-            // - all possible combinations are explored
-            // - no dimension is artificially fixed
-            // ----------------------------------------------------
             for (size_t k = 0; k < p; ++k) {
                 if (mask & (1ULL << k)) {
                     vec[k] = mat[i][k];
@@ -95,12 +86,12 @@ inline std::vector<std::vector<double>> metacoupling_c(
                 }
             }
 
-            // Compute CCD coupling for this mixed system
+            // Compute CCD coupling
             sum_c += coupling::ccd::ccd_c_single(vec, method);
             ++count;
         }
 
-        // The number of retained combinations is exactly 2^(p-1)
+        // count should be exactly 2^p - 2
         return sum_c / static_cast<double>(count);
     };
 
