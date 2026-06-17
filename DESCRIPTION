@@ -18,9 +18,12 @@ LinkingTo:
     RcppThread
 Suggests: 
     infoxtr,
+    knitr,
     pc,
     Rcpp,
     RcppThread,
+    rmarkdown,
     spEDM
 Config/roxygen2/markdown: TRUE
 Config/roxygen2/version: 8.0.0
+VignetteBuilder: knitr
