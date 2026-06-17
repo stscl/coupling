@@ -93,6 +93,8 @@ This enables cross-scale analysis of coupling.
 install.packages(c("sdsfun", "coupling", "tidyr", "dplyr", "ggplot2"), dep = TRUE)
 ```
 
+The `gzma` dataset represents the *Data of Social Space Quality in Guangzhou Metropolitan Areas of China (2010)*. It contains multiple indicators describing urban social space conditions. In particular, four key variables correspond to subsystem scores, including population stability (`PS_Score`), educational level (`EL_Score`), occupational hierarchy (`OH_Score`), and income level (`IL_Score `).
+
 Load the `gzma` dataset from the `sdsfun` package:
 
 ```{r load_data}
