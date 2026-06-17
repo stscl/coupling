@@ -26,7 +26,7 @@ The **Coupling Coordination Degree (CCD) model** is widely used to quantify the 
 
 ## Coupling Degree
 
-Given *n* normalized subsystem indicators $U_i$, the classical coupling degree is defined as:
+Given *n* normalized subsystem indicators $U_i$, the standard coupling degree $C$ is defined as:
 
 $$
 C = \left[ \frac{\prod_{i=1}^{n} U_i}{\left( \frac{1}{n} \sum_{i=1}^{n} U_i \right)^n} \right]^{\frac{1}{n}}
@@ -36,35 +36,17 @@ Although widely used, this formulation may suffer from **scale sensitivity and o
 
 ## Modified Coupling Degree
 
-
-
-### Wang-type formulation
-
-The Wang-type modification adjusts the coupling function to reduce nonlinearity and improve interpretability:
+### Modification by $\text{wang et al}^{[1]}$.
 
 $$
-C = \frac{2 \sqrt{U_1 U_2}}{U_1 + U_2}
+C = \sqrt{\left[1-\frac{\sum\limits_{i>j,j=1}^{n-1} \sqrt{\left(U_i-U_j\right)^2}}{\sum_{m=1}^{n-1}m}\right] \times \left(\prod_{i=1}^n \frac{U_i}{\text{max} U_i}\right)^{\frac{1}{n-1}}}
 $$
 
-and can be extended to the general form:
+### Modification by $\text{fan et al}^{[2]}$.
 
 $$
-C = \frac{n \left( \prod_{i=1}^{n} U_i \right)^{1/n}}{\sum_{i=1}^{n} U_i}
+C = 1-2\sqrt{\frac{n\sum_{i=1}^n U_i^2 - \left(\sum_{i=1}^n U_i\right)^2}{n^2}}
 $$
-
-This formulation replaces the power structure with a ratio between the geometric mean and arithmetic mean, leading to more stable behavior.
-
-### Fan-type formulation
-
-The Fan-type modification further revises the coupling structure by directly transforming the classical expression:
-
-\[
-C = \sqrt{1 - \frac{\sum_{i=1}^{n} (U_i - \bar{U})^2}{n \bar{U}^2}}
-\]
-
-where \( \bar{U} = \frac{1}{n} \sum_{i=1}^{n} U_i \).
-
-This formulation emphasizes **dispersion-based consistency**, making the coupling degree more sensitive to imbalance among subsystems.
 
 ## Comprehensive Development Index
 
@@ -78,7 +60,7 @@ where $\alpha_i$ are weights with $\sum \alpha_i = 1$.
 
 ## Coordination Degree
 
-The CCD integrates interaction and development:
+The coordination degree $D$ integrates interaction and development:
 
 $$
 D = \sqrt{C \times T}
@@ -98,3 +80,13 @@ The CCD framework can be extended under the **metacoupling framework**, distingu
 
 This enables cross-scale analysis of coupling.
 
+
+## References
+
+[1] Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses and modification of coupling coordination degree model in China. Journal of Natural Resources, 36, 793-810. https://doi.org/10.31497/zrzyxb.20210319
+
+[2] Fan, D., Ke, H. and Cao, R., 2024. Modification and improvement of coupling coordination degree model. Stat. Decis, 40, 41-46. https://doi.org/10.13546/j.cnki.tjyjc.2024.22.007
+
+[3] Tang, P., Huang, J., Zhou, H., Fang, C., Zhan, Y., Huang, W., 2021. Local and telecoupling coordination degree model of urbanization and the eco-environment based on RS and GIS: A case study in the Wuhan urban agglomeration. Sustainable Cities and Society 75, 103405. https://doi.org/10.1016/j.scs.2021.103405
+
+[4] Li, Y., Jia, N., Zheng, L., Yin, C., Chen, K., Sun, N., Jiang, A., Wang, M., Chen, R., Zhou, Z., 2026. A meta-coupling analysis between three-dimensional urbanization and ecosystem services in China’s urban agglomerations. Communications Earth & Environment 7. https://doi.org/10.1038/s43247-025-03047-w
