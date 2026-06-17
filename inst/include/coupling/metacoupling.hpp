@@ -312,6 +312,13 @@ inline std::vector<std::vector<double>> metacoupling_c(
         result[1][s] = peri_sum;
         result[2][s] = tele_sum;
     };
+    
+    // ============================================================
+    // Check for available threads
+    // ============================================================
+    if (threads == 0) threads = 1;
+    size_t hw = std::thread::hardware_concurrency();
+    if (hw > 0) threads = std::min(threads, hw);
 
     // ============================================================
     // Parallel or serial execution
@@ -356,6 +363,13 @@ inline std::vector<std::vector<double>> metacoupling(
     if (p <= 1) return result;
 
     size_t full_perm = 1ULL << p;
+
+    // ============================================================
+    // Check for available threads
+    // ============================================================
+    if (threads == 0) threads = 1;
+    size_t hw = std::thread::hardware_concurrency();
+    if (hw > 0) threads = std::min(threads, hw);
 
     // ============================================================
     // Step 1: reuse existing C computation
