@@ -295,6 +295,10 @@ inline std::vector<double> ccd_c(
     if (n_units == 0) return {};
 
     std::vector<double> result(n_units, 0.0);
+
+    if (threads == 0) threads = 1;
+    size_t hw = std::thread::hardware_concurrency();
+    if (hw > 0) threads = std::min(threads, hw);
     
     if (threads <= 1) {
         for (size_t i = 0; i < n_units; ++i) {
