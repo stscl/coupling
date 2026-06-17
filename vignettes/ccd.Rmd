@@ -108,6 +108,20 @@ dt = apply(sf::st_drop_geometry(gzma), 2,
 head(dt)
 ```
 
+## Analysis of coupling coordination degree
+
+```{r ccd_standard}
+ccd_standard = coupling::ccd(dt)
+```
+
+```{r ccd_wang}
+ccd_wang = coupling::ccd(dt, method = "wang")
+```
+
+```{r ccd_fan}
+ccd_fan = coupling::ccd(dt, method = "fan")
+```
+
 ## References
 
 [1] Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses and modification of coupling coordination degree model in China. Journal of Natural Resources, 36, 793-810. https://doi.org/10.31497/zrzyxb.20210319
