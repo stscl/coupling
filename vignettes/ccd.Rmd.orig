@@ -11,7 +11,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  message = FALSE,
+  comment = "##",
+  fig.path = "man/figures/ccd/"
+)
+```
 
 # Introduction
 
@@ -82,8 +89,7 @@ This enables cross-scale analysis of coupling.
 
 ## Install necessary packages and load data
 
-
-``` r
+```{r install_pkgs, eval = FALSE, echo = TRUE}
 install.packages(c("sdsfun", "coupling", "tidyr", "dplyr", "ggplot2"), dep = TRUE)
 ```
 
@@ -91,90 +97,37 @@ The `gzma` dataset represents the *Data of Social Space Quality in Guangzhou Met
 
 Load the `gzma` dataset from the `sdsfun` package:
 
-
-``` r
+```{r load_data}
 gzma = sf::read_sf(system.file('extdata/gzma.gpkg',package = 'sdsfun'))
 gzma
-## Simple feature collection with 118 features and 4 fields
-## Geometry type: POLYGON
-## Dimension:     XY
-## Bounding box:  xmin: 113.1485 ymin: 22.94659 xmax: 113.5628 ymax: 23.33026
-## Geodetic CRS:  WGS 84
-## # A tibble: 118 × 5
-##    PS_Score EL_Score OH_Score IL_Score                                                         geom
-##       <dbl>    <dbl>    <dbl>    <dbl>                                                <POLYGON [°]>
-##  1     7.21     4.64     4.75     2.64 ((113.2797 23.13359, 113.2715 23.13413, 113.2682 23.13371, …
-##  2     3.55     3.81     3.91     4.06 ((113.2519 23.15353, 113.2497 23.15545, 113.254 23.15774, 1…
-##  3     7.94     4.69     4.86     3.31 ((113.2815 23.12902, 113.2749 23.12969, 113.2732 23.12523, …
-##  4     8.22     4.93     4.92     3.74 ((113.3098 23.12458, 113.3046 23.12448, 113.3026 23.12642, …
-##  5     7.84     4.74     4.98     4.69 ((113.3099 23.11566, 113.3087 23.11542, 113.2957 23.11531, …
-##  6     8.12     5.13     4.98     3.92 ((113.2864 23.13354, 113.2863 23.135, 113.2884 23.1375, 113…
-##  7     8.30     5.18     4.87     3.77 ((113.2797 23.13359, 113.2799 23.13956, 113.274 23.14182, 1…
-##  8     5.14     4.43     4.41     4.13 ((113.3013 23.16168, 113.2985 23.16208, 113.296 23.16051, 1…
-##  9     5.92     4.18     4.37     2.29 ((113.2631 23.12832, 113.2586 23.12813, 113.2592 23.12228, …
-## 10     6.99     4.32     4.24     2.72 ((113.2747 23.12164, 113.2727 23.12362, 113.2732 23.12523, …
-## # ℹ 108 more rows
 ```
 
 Normalize the `*_Score` columns:
 
-
-``` r
+```{r normalize_score}
 dt = apply(sf::st_drop_geometry(gzma), 2,
            \(.x) (.x - min(.x)) / (max(.x) - min(.x)))
 head(dt)
-##    PS_Score  EL_Score  OH_Score  IL_Score
-## 1 0.8179733 0.3246648 0.6590316 0.1308531
-## 2 0.3020233 0.1318888 0.4046987 0.5173794
-## 3 0.9209903 0.3353516 0.6921477 0.3141320
-## 4 0.9604095 0.3914758 0.7099999 0.4316421
-## 5 0.9061589 0.3473603 0.7297774 0.6909494
-## 6 0.9456379 0.4391423 0.7304117 0.4792905
 ```
 
 ## Analysis of coupling coordination degree
 
-
-``` r
+```{r ccd_standard}
 ccd_standard = coupling::ccd(dt)
 head(ccd_standard)
-##           C         D
-## 1 0.8051958 0.6237105
-## 2 0.8914577 0.5497290
-## 3 0.8999423 0.7134825
-## 4 0.9346128 0.7632959
-## 5 0.9440912 0.7944703
-## 6 0.9519923 0.7858001
 ```
 
-
-``` r
+```{r ccd_wang}
 ccd_wang = coupling::ccd(dt, method = "wang")
 head(ccd_wang)
-##           C         D
-## 1 0.4722274 0.4776480
-## 2 0.6211236 0.4588675
-## 3 0.5375842 0.5514412
-## 4 0.5861986 0.6045044
-## 5 0.6640321 0.6662930
-## 6 0.6319211 0.6402164
 ```
 
-
-``` r
+```{r ccd_fan}
 ccd_fan = coupling::ccd(dt, method = "fan")
 head(ccd_fan)
-##           C         D
-## 1 0.4593785 0.4711049
-## 2 0.7164548 0.4928249
-## 3 0.4915051 0.5272784
-## 4 0.5399620 0.5801746
-## 5 0.5951898 0.6308098
-## 6 0.5907777 0.6190239
 ```
 
-
-``` r
+```{r fig_ccd,fig.width=4.5,fig.height=6.5,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 1**. Spatial distribution of CCD components across three estimation methods. Panels display component C and component D derived from the standard, Wang, and Fan methods, respectively.")}
 ccd_df = do.call(cbind, list(ccd_standard, ccd_wang, ccd_fan))
 names(ccd_df) = paste0(rep(c("standard", "wang", "fan"), each = 2),
                        "_", rep(c("C", "D"), times = 3))
@@ -202,14 +155,11 @@ fig1 = ccd_df |>
 fig1
 ```
 
-![**Figure 1**. Spatial distribution of CCD components across three estimation methods. Panels display component C and component D derived from the standard, Wang, and Fan methods, respectively.](../man/figures/ccd/fig_ccd-1.png)
-
 ## A Meta-Coupling Analysis
 
 Due to data limitations, here we focus on **peri-coupling** based on a Queen contiguity structure. Pericoupling among neighboring units are further weighted using an inverse distance scheme. The calculation of the coupling coordination degree adopts the formulation proposed by $\text{wang et al}^{[1]}$.
 
-
-``` r
+```{r peri_coupling}
 nb = sdsfun::spdep_nb(gzma)
 swm_peri = sdsfun::inverse_distance_swm(gzma)
 for (i in seq_len(nrow(gzma))) {
@@ -219,17 +169,9 @@ swm_peri = apply(swm_peri, 1, \(.x) .x / sum(.x))
 
 mc_wang = coupling::metacoupling(dt, swm_peri = swm_peri, method = "wang")
 head(mc_wang)
-##     Intra_C   Intra_D    Peri_C    Peri_D Tele_C Tele_D
-## 1 0.4722274 0.4776480 0.7414392 0.7507625      0      0
-## 2 0.6211236 0.4588675 0.6712215 0.5061883      0      0
-## 3 0.5375842 0.5514412 0.4539894 0.4644758      0      0
-## 4 0.5861986 0.6045044 0.6692548 0.6808108      0      0
-## 5 0.6640321 0.6662930 0.6880871 0.6870927      0      0
-## 6 0.6319211 0.6402164 0.6064480 0.6032699      0      0
 ```
 
-
-``` r
+```{r fig_metacoupling,fig.width=4.5,fig.height=4.5,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 2**. Spatial distribution of intra- and pericoupling CCD components based on the Wang formulation. Panels display coupling degree (C) and coordination degree (D) for intra- and pericoupling, respectively.")}
 fig2 = mc_wang |> 
   dplyr::select(dplyr::all_of(c("Intra_C", "Intra_D", "Peri_C", "Peri_D"))) |> 
   sf::st_set_geometry(sf::st_geometry(gzma)) |> 
@@ -255,8 +197,6 @@ fig2 = mc_wang |>
   )
 fig2
 ```
-
-![**Figure 2**. Spatial distribution of intra- and pericoupling CCD components based on the Wang formulation. Panels display coupling degree (C) and coordination degree (D) for intra- and pericoupling, respectively.](../man/figures/ccd/fig_metacoupling-1.png)
 
 ## References
 
