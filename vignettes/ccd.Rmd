@@ -85,6 +85,21 @@ The CCD framework can be extended under the $\text{metacoupling framework}^{[3,4
 
 This enables cross-scale analysis of coupling.
 
+# Example Cases
+
+## Install necessary packages and load data
+
+```{r install_pkgs, eval = FALSE, echo = TRUE}
+install.packages(c("sdsfun", "coupling", "tmap"), dep = TRUE)
+```
+
+Load the `gzma` dataset from the `sdsfun` package:
+
+```{r load_data}
+gzma = sf::read_sf(system.file('extdata/gzma.gpkg',package = 'sdsfun'))
+gzma
+```
+
 
 ## References
 
