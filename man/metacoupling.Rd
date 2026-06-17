@@ -55,8 +55,8 @@ typically symmetric.
 \examples{
 set.seed(42)
 mat = matrix(runif(20), nrow = 5)
-swm1 = matrix(runif(25), 5, 5)
-swm2 = matrix(runif(25), 5, 5)
+swm1 = apply(matrix(runif(25), 5, 5), 1, \(.x) .x / sum(.x))
+swm2 = apply(matrix(runif(25), 5, 5), 1, \(.x) .x / sum(.x))
 coupling::metacoupling(mat, swm1, swm2)
 
 }
