@@ -78,6 +78,7 @@ where
 ## Metacoupling Perspective
 
 The CCD framework can be extended under the $\text{metacoupling framework}^{[3,4]}$, distinguishing:
+
 - **Intracoupling**  
 - **Pericoupling**  
 - **Telecoupling**  
