@@ -1,5 +1,9 @@
 ---
-title: "ccd"
+title: "Coupling Coordination Degree Model and Metacoupling Analysis"
+author: "Wenbo Lyu"
+date: |
+  | Last update: 2026-05-11
+  | Last run: `r Sys.Date()`
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{ccd}
@@ -10,10 +14,10 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  message = FALSE,
+  comment = "##",
+  fig.path = "man/figures/ccd/"
 )
 ```
 
-```{r setup}
-library(coupling)
-```
+# Introduction
