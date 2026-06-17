@@ -171,6 +171,33 @@ mc_wang = coupling::metacoupling(dt, swm_peri = swm_peri, method = "wang")
 head(mc_wang)
 ```
 
+```{r fig_metacoupling,fig.width=4.5,fig.height=4.5,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 2**. Spatial distribution of intra- and pericoupling CCD components based on the Wang formulation. Panels display coupling degree (C) and coordination degree (D) for intra- and pericoupling, respectively.")}
+fig2 = mc_wang |> 
+  dplyr::select(dplyr::all_of(c("Intra_C", "Intra_D", "Peri_C", "Peri_D"))) |> 
+  sf::st_set_geometry(sf::st_geometry(gzma)) |> 
+  tidyr::pivot_longer(-geometry, names_to = "var", values_to = "val") |> 
+  dplyr::mutate(var = factor(var, 
+                             levels = c("Intra_C", "Intra_D", "Peri_C", "Peri_D"))) |> 
+  ggplot2::ggplot() +
+  ggplot2::geom_sf(ggplot2::aes(fill = val), color = "grey40", lwd = 0.15) +
+  ggplot2::scale_fill_gradientn(
+    name = "degree",
+    colors = c("#ffffcc", "#d9f0a3", "#addd8e",
+               "#78c679", "#31a354", "#006837")
+  ) +
+  ggplot2::facet_wrap(~var, ncol = 2) +
+  ggplot2::theme_bw(base_family = "serif") +
+  ggplot2::theme(
+    panel.grid = ggplot2::element_blank(),
+    axis.text = ggplot2::element_blank(),
+    axis.ticks = ggplot2::element_blank(),
+    strip.text = ggplot2::element_text(face = "bold", size = 15),
+    legend.title = ggplot2::element_text(size = 16.5),
+    legend.text = ggplot2::element_text(size = 15)
+  )
+fig2 + ggview::canvas(4.5,4.5)
+```
+
 ## References
 
 [1] Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses and modification of coupling coordination degree model in China. Journal of Natural Resources, 36, 793-810. https://doi.org/10.31497/zrzyxb.20210319
