@@ -90,7 +90,7 @@ This enables cross-scale analysis of coupling.
 ## Install necessary packages and load data
 
 ```{r install_pkgs, eval = FALSE, echo = TRUE}
-install.packages(c("sdsfun", "coupling", "tmap"), dep = TRUE)
+install.packages(c("sdsfun", "coupling", "ggplot2"), dep = TRUE)
 ```
 
 Load the `gzma` dataset from the `sdsfun` package:
@@ -112,14 +112,17 @@ head(dt)
 
 ```{r ccd_standard}
 ccd_standard = coupling::ccd(dt)
+head(ccd_standard)
 ```
 
 ```{r ccd_wang}
 ccd_wang = coupling::ccd(dt, method = "wang")
+head(ccd_wang)
 ```
 
 ```{r ccd_fan}
 ccd_fan = coupling::ccd(dt, method = "fan")
+head(ccd_fan)
 ```
 
 ## References
