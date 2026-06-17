@@ -125,7 +125,7 @@ ccd_fan = coupling::ccd(dt, method = "fan")
 head(ccd_fan)
 ```
 
-```{r fig_ccd, fig.width=6.5,fig.height=2.5,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 1**. SURD decomposition results between climatic and topographic factors and npp.")}
+```{r fig_ccd,fig.width=4.5,fig.height=6.5,fig.dpi=300,fig.cap=knitr::asis_output("**Figure 1**. Spatial distribution of CCD components across three estimation methods. Panels display component C and component D derived from the standard, Wang, and Fan methods, respectively.")}
 ccd_df = do.call(cbind, list(ccd_standard, ccd_wang, ccd_fan))
 names(ccd_df) = paste0(rep(c("standard", "wang", "fan"), each = 2),
                        "_", rep(c("C", "D"), times = 3))
@@ -135,8 +135,22 @@ fig1 = ccd_df |>
   dplyr::mutate(var = factor(var, levels = names(ccd_df))) |> 
   ggplot2::ggplot() +
   ggplot2::geom_sf(ggplot2::aes(fill = val), color = "grey40", lwd = 0.15) +
-  ggplot2::facet_wrap(~var, ncol = 2)
-fig1 + ggview::canvas(4.5,6.8)
+  ggplot2::scale_fill_gradientn(
+    name = "degree",
+    colors = c("#ffffcc", "#d9f0a3", "#addd8e",
+               "#78c679", "#31a354", "#006837")
+  ) +
+  ggplot2::facet_wrap(~var, ncol = 2) +
+  ggplot2::theme_bw(base_family = "serif") +
+  ggplot2::theme(
+    panel.grid = ggplot2::element_blank(),
+    axis.text = ggplot2::element_blank(),
+    axis.ticks = ggplot2::element_blank(),
+    strip.text = ggplot2::element_text(face = "bold", size = 15),
+    legend.title = ggplot2::element_text(size = 16.5),
+    legend.text = ggplot2::element_text(size = 15)
+  )
+fig1
 ```
 
 ## References
