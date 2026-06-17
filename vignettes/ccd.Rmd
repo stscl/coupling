@@ -32,17 +32,21 @@ $$
 C = \left[ \frac{\prod_{i=1}^{n} U_i}{\left( \frac{1}{n} \sum_{i=1}^{n} U_i \right)^n} \right]^{\frac{1}{n}}
 $$
 
-Although widely used, this formulation may suffer from **scale sensitivity and over-amplification effects** due to the power structure. To address these issues, alternative formulations have been proposed by modifying the functional form of the coupling degree.
+Although widely used, this formulation may suffer from **scale sensitivity and over-amplification effects** due to the power structure. To address these issues, several formulations have been proposed by modifying the functional form of the coupling degree.
 
 ## Modified Coupling Degree
 
 ### Modification by $\text{wang et al}^{[1]}$.
+
+**First**, Wang et al. introduce a formulation that incorporates pairwise differences among subsystems while normalizing their relative magnitudes:
 
 $$
 C = \sqrt{\left[1-\frac{\sum\limits_{i>j,j=1}^{n-1} \sqrt{\left(U_i-U_j\right)^2}}{\sum_{m=1}^{n-1}m}\right] \times \left(\prod_{i=1}^n \frac{U_i}{\text{max} U_i}\right)^{\frac{1}{n-1}}}
 $$
 
 ### Modification by $\text{fan et al}^{[2]}$.
+
+**Alternatively**, Fan et al. propose a simplified structure derived from variance-like dispersion, which directly captures the imbalance among subsystem indicators:
 
 $$
 C = 1-2\sqrt{\frac{n\sum_{i=1}^n U_i^2 - \left(\sum_{i=1}^n U_i\right)^2}{n^2}}
@@ -60,7 +64,7 @@ where $\alpha_i$ are weights with $\sum \alpha_i = 1$.
 
 ## Coordination Degree
 
-The coordination degree $D$ integrates interaction and development:
+The coordination degree $D$ integrates interaction $C$ and development $T$:
 
 $$
 D = \sqrt{C \times T}
