@@ -155,6 +155,12 @@ fig1 = ccd_df |>
 fig1
 ```
 
+## A Meta-Coupling Analysis
+
+Due to data limitations, here we focus on **peri-coupling** based on a Queen contiguity structure. Spatial interactions among neighboring units are further weighted using an inverse distance scheme. The calculation of the coupling coordination degree adopts the formulation proposed by $\text{wang et al}^{[1]}$.
+
+
+
 ## References
 
 [1] Wang, S., Kong, W., Ren, L. and ZHI, D., 2021. Research on misuses and modification of coupling coordination degree model in China. Journal of Natural Resources, 36, 793-810. https://doi.org/10.31497/zrzyxb.20210319
