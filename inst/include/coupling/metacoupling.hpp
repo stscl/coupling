@@ -413,11 +413,7 @@ inline std::vector<std::vector<double>> metacoupling(
         return sum_t / static_cast<double>(count);
     };
 
-    // ============================================================
-    // Step 3: assemble results
-    // ============================================================
-    for (size_t s = 0; s < n_units; ++s) {
-
+    auto worker4D = [&](size_t s) {
         // ---- intra ----
         double C_intra = C_res[0][s];
         double T_intra = compute_T_intra(s);
@@ -456,6 +452,17 @@ inline std::vector<std::vector<double>> metacoupling(
 
         result[4][s] = C_tele;
         result[5][s] = std::sqrt(C_tele * tele_T_sum);
+    };
+
+    // ============================================================
+    // Step 3: assemble results
+    // ============================================================
+    if (threads <= 1) {
+        for (size_t s = 0; s < n_units; ++s) {
+            worker4D(s);
+        }
+    } else {
+        RcppThread::parallelFor(0, n_units, worker4D, threads);
     }
 
     return result;
