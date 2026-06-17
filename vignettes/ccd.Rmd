@@ -2,7 +2,7 @@
 title: "Coupling Coordination Degree Model and Metacoupling Analysis"
 author: "Wenbo Lyu"
 date: |
-  | Last update: 2026-05-11
+  | Last update: 2026-05-12
   | Last run: `r Sys.Date()`
 output: rmarkdown::html_vignette
 vignette: >
@@ -195,7 +195,7 @@ fig2 = mc_wang |>
     legend.title = ggplot2::element_text(size = 16.5),
     legend.text = ggplot2::element_text(size = 15)
   )
-fig2 + ggview::canvas(4.5,4.5)
+fig2
 ```
 
 ## References
