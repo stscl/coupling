@@ -157,9 +157,19 @@ fig1
 
 ## A Meta-Coupling Analysis
 
-Due to data limitations, here we focus on **peri-coupling** based on a Queen contiguity structure. Spatial interactions among neighboring units are further weighted using an inverse distance scheme. The calculation of the coupling coordination degree adopts the formulation proposed by $\text{wang et al}^{[1]}$.
+Due to data limitations, here we focus on **peri-coupling** based on a Queen contiguity structure. Pericoupling among neighboring units are further weighted using an inverse distance scheme. The calculation of the coupling coordination degree adopts the formulation proposed by $\text{wang et al}^{[1]}$.
 
+```{r peri_coupling}
+nb = sdsfun::spdep_nb(gzma)
+swm_peri = sdsfun::inverse_distance_swm(gzma)
+for (i in seq_len(nrow(gzma))) {
+  swm_peri[i, seq_len(nrow(gzma))[-nb[[i]]]] = 0
+}
+swm_peri = apply(swm_peri, 1, \(.x) .x / sum(.x))
 
+mc_wang = coupling::metacoupling(dt, swm_peri = swm_peri, method = "wang")
+head(mc_wang)
+```
 
 ## References
 
