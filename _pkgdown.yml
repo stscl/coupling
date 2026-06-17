@@ -30,3 +30,7 @@ reference:
 - subtitle: coupling coordination degree
   contents:
   - ccd
+
+- subtitle: meta-coupling analysis
+  contents:
+  - metacoupling
