@@ -21,3 +21,79 @@ knitr::opts_chunk$set(
 ```
 
 # Introduction
+
+The **Coupling Coordination Degree (CCD) model** is widely used to quantify the coupling and coordinated development among multiple subsystems. Originating from physics, it has been extensively applied in regional and human–environment systems.
+
+## Coupling Degree
+
+Given *n* normalized subsystem indicators $U_i$, the classical coupling degree is defined as:
+
+$$
+C = \left[ \frac{\prod_{i=1}^{n} U_i}{\left( \frac{1}{n} \sum_{i=1}^{n} U_i \right)^n} \right]^{\frac{1}{n}}
+$$
+
+Although widely used, this formulation may suffer from **scale sensitivity and over-amplification effects** due to the power structure.
+
+## Modified Coupling Degree
+
+To address these issues, alternative formulations have been proposed by modifying the functional form of the coupling degree.
+
+### Wang-type formulation
+
+The Wang-type modification adjusts the coupling function to reduce nonlinearity and improve interpretability:
+
+$$
+C = \frac{2 \sqrt{U_1 U_2}}{U_1 + U_2}
+$$
+
+and can be extended to the general form:
+
+$$
+C = \frac{n \left( \prod_{i=1}^{n} U_i \right)^{1/n}}{\sum_{i=1}^{n} U_i}
+$$
+
+This formulation replaces the power structure with a ratio between the geometric mean and arithmetic mean, leading to more stable behavior.
+
+### Fan-type formulation
+
+The Fan-type modification further revises the coupling structure by directly transforming the classical expression:
+
+\[
+C = \sqrt{1 - \frac{\sum_{i=1}^{n} (U_i - \bar{U})^2}{n \bar{U}^2}}
+\]
+
+where \( \bar{U} = \frac{1}{n} \sum_{i=1}^{n} U_i \).
+
+This formulation emphasizes **dispersion-based consistency**, making the coupling degree more sensitive to imbalance among subsystems.
+
+## Comprehensive Development Index
+
+The overall development level is defined as:
+
+$$
+T = \sum_{i=1}^{n} \alpha_i U_i
+$$
+
+where $\alpha_i$ are weights with $\sum \alpha_i = 1$.
+
+## Coordination Degree
+
+The CCD integrates interaction and development:
+
+$$
+D = \sqrt{C \times T}
+$$
+
+where  
+- $C$ measures coupling degree  
+- $T$ measures development level  
+- $D$ reflects coordinated development  
+
+## Metacoupling Perspective
+
+The CCD framework can be extended under the **metacoupling framework**, distinguishing:
+- **Intracoupling**  
+- **Pericoupling**  
+- **Telecoupling**  
+
+This enables cross-scale analysis of spatial interactions.
