@@ -100,6 +100,13 @@ gzma = sf::read_sf(system.file('extdata/gzma.gpkg',package = 'sdsfun'))
 gzma
 ```
 
+Normalize the `*_Score` columns:
+
+```{r normalize_score}
+dt = apply(sf::st_drop_geometry(gzma), 2,
+           \(.x) (.x - min(.x)) / (max(.x) - min(.x)))
+head(dt)
+```
 
 ## References
 
