@@ -16,7 +16,7 @@
 
 <a href="https://stscl.github.io/coupling/"><img src="man/figures/coupling.png" align="right" hspace="5" vspace="0" width="15%" alt="coupling website: https://stscl.github.io/coupling/"/></a>
 
-***Coupling** Coordination Analysis*
+*Analysis of Coupling Coordination Degree*
 
 *coupling* is an R package for coupling coordination analysis based on coupling coordination degree (CCD) models. It incorporates metacoupling frameworks to characterize cross-scale linkages, flows, and feedbacks within and among coupled systems.
 
