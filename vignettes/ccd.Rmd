@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The **Coupling Coordination Degree (CCD) model** is widely used to quantify the coupling and coordinated development among multiple subsystems. Originating from physics, it has been extensively applied in regional and human–environment systems.
+The **Coupling Coordination Degree (CCD) model** is widely used to quantify the degree of coupling and coordinated development among multiple subsystems. Originating from physics, it has been extensively applied in regional and human–environment systems.
 
 ## Coupling Degree
 
@@ -32,11 +32,11 @@ $$
 C = \left[ \frac{\prod_{i=1}^{n} U_i}{\left( \frac{1}{n} \sum_{i=1}^{n} U_i \right)^n} \right]^{\frac{1}{n}}
 $$
 
-Although widely used, this formulation may suffer from **scale sensitivity and over-amplification effects** due to the power structure.
+Although widely used, this formulation may suffer from **scale sensitivity and over-amplification effects** due to the power structure. To address these issues, alternative formulations have been proposed by modifying the functional form of the coupling degree.
 
 ## Modified Coupling Degree
 
-To address these issues, alternative formulations have been proposed by modifying the functional form of the coupling degree.
+
 
 ### Wang-type formulation
 
@@ -96,4 +96,5 @@ The CCD framework can be extended under the **metacoupling framework**, distingu
 - **Pericoupling**  
 - **Telecoupling**  
 
-This enables cross-scale analysis of spatial interactions.
+This enables cross-scale analysis of coupling.
+
