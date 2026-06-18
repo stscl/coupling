@@ -42,12 +42,10 @@ install.packages("coupling",
 - Install from source code on [GitHub](https://github.com/stscl/coupling) with:
 
 ``` r
-if (!requireNamespace("devtools")) {
-    install.packages("devtools")
+if (!requireNamespace("pak", quietly = TRUE)) {
+    install.packages("pak")
 }
-devtools::install_github("stscl/coupling",
-                         build_vignettes = TRUE,
-                         dep = TRUE)
+pak::pak("stscl/coupling", dependencies = TRUE)
 ```
 
 ## References
