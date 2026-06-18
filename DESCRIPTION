@@ -17,12 +17,14 @@ LinkingTo:
     Rcpp,
     RcppThread
 Suggests: 
+    gdverse,
     infoxtr,
     knitr,
     pc,
     Rcpp,
     RcppThread,
     rmarkdown,
+    sdsfun,
     spEDM
 Config/roxygen2/markdown: TRUE
 Config/roxygen2/version: 8.0.0
