@@ -11,10 +11,10 @@ navbar:
   bg: custom
   components:
     articles:
-      # text: Vignettes
-      # menu:
-      # - text: Coupling Coordination Degree Model and Metacoupling Analysis
-      #   href: articles/ccd.html
+      text: Vignettes
+      menu:
+      - text: Coupling Coordination Degree Model and Metacoupling Analysis
+        href: articles/ccd.html
 
 home:
   title: |
